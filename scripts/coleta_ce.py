@@ -53,15 +53,21 @@ INDICADORES = [
 
 URL_VAREJO = "https://apisidra.ibge.gov.br/values/t/8883/n1/all/v/11709/p/all/c11046/56736/c85/2762"
 URL_ICST = "http://www.ipeadata.gov.br/api/odata4/ValoresSerie(SERCODIGO='FGV12_ICSTCA12')"
-URL_SINAPI = "https://apisidra.ibge.gov.br/values/t/2296/n1/all/n3/all/v/all/p/last%201"
+URL_SINAPI = "https://apisidra.ibge.gov.br/values/t/2296/n1/all/n3/all/v/48,1198/p/last%201"  # 48 custo do m² (R$), 1198 variação em 12 meses
 
 def fx_or(fx, nome, url):
     return json.load(open(os.path.join(fx, nome), encoding="utf-8")) if fx else get(url)
 
 def sgs(serie, fx=None):
-    hoje = date.today().strftime("%d/%m/%Y")
-    return fx_or(fx, f"sgs_{serie}.json",
-                 f"https://api.bcb.gov.br/dados/serie/bcdata.sgs.{serie}/dados?formato=json&dataInicial=01/01/2008&dataFinal={hoje}")
+    """O BC aceita no máximo 10 anos por consulta em séries diárias: busca em janelas de 8 anos."""
+    if fx: return json.load(open(os.path.join(fx, f"sgs_{serie}.json"), encoding="utf-8"))
+    hoje, ini, linhas = date.today(), date(2008, 1, 1), []
+    while ini <= hoje:
+        fim = min(date(ini.year + 8, 12, 31), hoje)
+        linhas += get(f"https://api.bcb.gov.br/dados/serie/bcdata.sgs.{serie}/dados?formato=json"
+                      f"&dataInicial={ini:%d/%m/%Y}&dataFinal={fim:%d/%m/%Y}")
+        ini = date(fim.year + 1, 1, 1)
+    return linhas
 
 def mensal_sgs(rows):
     out = {}
@@ -114,10 +120,10 @@ def ler_sinapi(rows):
     for r in rows[1:]:
         try: v = float(r["V"])
         except (ValueError, KeyError): continue
-        terr = r[f"D{d['terr']}N"]; var = r[f"D{d['var']}N"].lower(); ref = r[f"D{d['mes']}C"]
+        terr = r[f"D{d['terr']}N"]; var = r[f"D{d['var']}C"]; ref = r[f"D{d['mes']}C"]
         l = lugares.setdefault(terr, {"nome": terr})
-        if "custo" in var and "moeda corrente" in var: l["custo"] = round(v, 2)
-        elif "12 meses" in var: l["var12"] = round(v, 2)
+        if var == "48": l["custo"] = round(v, 2)
+        elif var == "1198": l["var12"] = round(v, 2)
     siglas = {"Acre":"AC","Alagoas":"AL","Amapá":"AP","Amazonas":"AM","Bahia":"BA","Ceará":"CE","Distrito Federal":"DF",
               "Espírito Santo":"ES","Goiás":"GO","Maranhão":"MA","Mato Grosso":"MT","Mato Grosso do Sul":"MS","Minas Gerais":"MG",
               "Pará":"PA","Paraíba":"PB","Paraná":"PR","Pernambuco":"PE","Piauí":"PI","Rio de Janeiro":"RJ","Rio Grande do Norte":"RN",
