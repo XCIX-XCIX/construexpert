@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Termômetro ConstruExpert</title>
+<meta name="description" content="Em que fase está a construção civil no Brasil? Custo, confiança, crédito, atividade e emprego numa nota de 0 a 100, atualizada todo dia, com o custo do m² em cada estado.">
+<meta name="theme-color" content="#0B0B0B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Identidade ConstruExpert: preto, amarelo e branco. Layout: leitura rápida no topo, indicadores, histórico, custo por estado, metodologia em faixa clara. */
+  --fundo:#0B0B0B;
+  --superficie:#161616;
+  --superficie-2:#202020;
+  --texto:#ffffff;
+  --texto-suave:#a8a8a8;
+  --texto-fraco:#767676;
+  --linha:#2c2c2c;
+  --amarelo:#FFC400;
+  --claro:#F5F2EA;
+  /* Semáforo oficial do Termômetro: 0-39 vermelho, 40-59 amarelo, 60-100 verde */
+  --vermelho:#e5534b; --verde:#3fb950;
+  --sans:Inter,"SF Pro Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --wrap:1180px;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--fundo);color:var(--texto);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+h1,h2,h3,p{margin:0}
+:focus-visible{outline:3px solid var(--amarelo);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+.disp{font-weight:800;letter-spacing:-.025em;line-height:1.05;text-wrap:balance}
+.rotulo{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--texto-suave)}
+.num{font-variant-numeric:tabular-nums}
+.marca-a{text-decoration:underline;text-decoration-color:var(--amarelo);text-decoration-thickness:.11em;text-underline-offset:.14em;text-decoration-skip-ink:none}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;min-height:46px;padding:0 20px;font-weight:700;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;border-radius:6px;border:1.5px solid transparent;cursor:pointer}
+.btn-y{background:var(--amarelo);color:#0B0B0B}
+.btn-y:hover{background:#ffd23f}
+.btn-k{background:#0B0B0B;color:#fff}
+.btn-k:hover{background:#262626}
+.btn-sm{min-height:40px;padding:0 14px;font-size:.76rem}
+
+.top{position:sticky;top:0;z-index:30;background:rgba(11,11,11,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--linha)}
+.top .wrap{display:flex;align-items:center;gap:28px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-size:1.12rem;letter-spacing:-.02em;white-space:nowrap}
+.logo i{width:18px;height:18px;background:var(--amarelo);display:inline-block}
+.nav{display:flex;gap:24px;margin-left:auto}
+.nav a{font-weight:600;font-size:.9rem;text-decoration:none;color:var(--texto-suave)}
+.nav a:hover,.nav a[aria-current]{color:#fff}
+
+.hero{padding:48px 0 40px;border-bottom:1px solid var(--linha)}
+.hero h1{margin-top:12px;font-size:clamp(2.1rem,4.6vw,3.4rem);max-width:15em}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;margin-top:32px}
+.leitura{background:var(--superficie);border:1px solid var(--linha);border-radius:12px;padding:28px}
+.leitura-top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.score{font-weight:800;font-size:clamp(3.6rem,8vw,5.4rem);line-height:.9;letter-spacing:-.04em}
+.zona-nome{font-weight:800;font-size:1.6rem;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;justify-content:flex-end}
+.zona-dot{width:14px;height:14px;border-radius:50%;flex:none}
+.leitura-sub{color:var(--texto-suave);font-size:.92rem;margin-top:6px}
+.escala{margin-top:28px;position:relative}
+.escala-barra{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;height:14px;border-radius:7px;overflow:hidden}
+.escala-barra span:nth-child(1){background:var(--z2)}
+.escala-barra span:nth-child(2){background:var(--z1)}
+.escala-barra span:nth-child(3){background:var(--z0)}
+.escala-barra span:nth-child(4){background:var(--zm1)}
+.escala-barra span:nth-child(5){background:var(--zm2)}
+.escala-rotulos{display:grid;grid-template-columns:repeat(5,1fr);margin-top:10px;font-size:.78rem;color:var(--texto-suave);text-align:center}
+.escala-rotulos span:first-child{text-align:left}
+.escala-rotulos span:last-child{text-align:right}
+.marcador{position:absolute;top:-9px;width:4px;height:32px;margin-left:-2px;background:#fff;border-radius:2px;box-shadow:0 0 0 2px var(--superficie);transition:left .4s ease}
+.marcador::after{content:"";position:absolute;top:-7px;left:-5px;border:7px solid transparent;border-top-color:#fff;border-bottom:0}
+.contagem{display:flex;gap:6px;flex-wrap:wrap;margin-top:22px}
+.mini-chip{font-family:var(--mono);font-size:.72rem;padding:4px 8px;border-radius:6px;background:var(--superficie-2);color:var(--texto-suave);display:inline-flex;gap:6px;align-items:center}
+.mini-chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+.numeros{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--linha);border:1px solid var(--linha);border-radius:12px;overflow:hidden}
+.numero{background:var(--fundo);padding:20px}
+.numero .v{font-weight:800;font-size:1.55rem;letter-spacing:-.03em;margin-top:6px}
+.numero .d{color:var(--texto-suave);font-size:.82rem;margin-top:2px}
+.numero.destaque .v{color:var(--amarelo)}
+
+.sec{padding:56px 0;border-bottom:1px solid var(--linha)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+.sec-head h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-top:8px}
+.sec-head p{color:var(--texto-suave);max-width:38em;margin-top:8px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.card{background:var(--superficie);border:1px solid var(--linha);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;border-left:4px solid var(--z0);transition:opacity .2s}
+.card.off{opacity:.5}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.card h3{font-weight:700;font-size:1.04rem;letter-spacing:-.01em}
+.card .val{font-weight:800;font-size:2rem;letter-spacing:-.03em;line-height:1}
+.card .ref{font-family:var(--mono);font-size:.72rem;color:var(--texto-fraco);margin-top:6px}
+.chip{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.03em;padding:4px 9px;border-radius:999px;white-space:nowrap;color:#111}
+.card p{color:var(--texto-suave);font-size:.88rem}
+.card .det{color:#d4d4d4}
+.tag-manual{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--amarelo)}
+.regua{position:relative;padding-top:4px}
+.regua-barra{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;height:6px}
+.regua-barra span{opacity:.85}
+.regua-cortes{position:relative;height:16px;font-family:var(--mono);font-size:.66rem;color:var(--texto-fraco)}
+.regua-cortes span{position:absolute;transform:translateX(-50%);top:3px;white-space:nowrap}
+.regua-pino{position:absolute;top:-1px;width:3px;height:16px;margin-left:-1.5px;background:#fff;border-radius:2px;box-shadow:0 0 0 2px var(--superficie)}
+.toggle{display:flex;align-items:center;gap:10px;font-size:.84rem;color:var(--texto-suave);cursor:pointer;user-select:none;margin-top:auto}
+.toggle input{position:absolute;opacity:0;width:1px;height:1px}
+.sw{width:36px;height:20px;border-radius:999px;background:#404040;position:relative;flex:none;transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .2s}
+.toggle input:checked + .sw{background:var(--amarelo)}
+.toggle input:checked + .sw::after{transform:translateX(16px);background:#0B0B0B}
+.toggle input:focus-visible + .sw{outline:3px solid var(--amarelo);outline-offset:2px}
+.acoes{display:flex;gap:8px;flex-wrap:wrap}
+.btn-ghost{background:transparent;border:1px solid var(--linha);color:var(--texto-suave);font-family:var(--sans);font-weight:600;font-size:.84rem;padding:8px 12px;border-radius:6px;cursor:pointer}
+.btn-ghost:hover{color:#fff;border-color:#555}
+.btn-ghost[aria-pressed="true"]{background:var(--amarelo);color:#0B0B0B;border-color:var(--amarelo)}
+
+.grafico-box{background:var(--superficie);border:1px solid var(--linha);border-radius:12px;padding:20px 16px 12px}
+.grafico-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:0 4px 12px}
+.grafico-head h3{font-weight:700;font-size:1rem}
+.legenda{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--texto-suave)}
+.legenda span{display:inline-flex;align-items:center;gap:6px}
+.legenda i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.grafico{position:relative}
+.grafico svg{display:block;width:100%;height:auto;overflow:visible}
+.grafico svg text{font-family:var(--mono);font-size:11px;fill:var(--texto-fraco)}
+.tip{position:absolute;pointer-events:none;background:#000;border:1px solid #444;border-radius:8px;padding:10px 12px;font-size:.8rem;min-width:170px;opacity:0;transition:opacity .1s;z-index:5}
+.tip b{font-family:var(--mono);font-size:.72rem;color:var(--texto-suave);font-weight:500;display:block;margin-bottom:4px}
+.tip .l{display:flex;justify-content:space-between;gap:14px}
+.nota-rodape{color:var(--texto-fraco);font-size:.8rem;padding:10px 4px 2px}
+
+/* Custo por estado */
+.ufs{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 40px}
+.uf{display:grid;grid-template-columns:34px 1fr 96px 64px;align-items:center;gap:10px;font-size:.88rem;padding:5px 0;border-bottom:1px solid var(--linha)}
+.uf b{font-family:var(--mono);font-weight:600;color:var(--texto-suave)}
+.uf .barra{height:10px;background:var(--superficie-2);border-radius:2px;overflow:hidden}
+.uf .barra span{display:block;height:100%;background:#5a5a5a;border-radius:2px}
+.uf.real b{color:var(--amarelo)}
+.uf.real .barra span{background:var(--amarelo)}
+.uf .c{text-align:right;font-weight:600}
+.uf .p{text-align:right;color:var(--texto-suave);font-size:.8rem}
+.uf-cab{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-fraco);border-bottom:1px solid #444}
+
+.light{background:var(--claro);color:#0B0B0B;color-scheme:light}
+.light .rotulo{color:#555}
+.metodo{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.metodo h3{font-weight:800;font-size:1.2rem;margin-bottom:10px;letter-spacing:-.01em}
+.metodo p{color:#3a3a3a;margin-bottom:12px;max-width:36em}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{text-align:right;padding:7px 8px;border-bottom:1px solid #ddd8cc;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#555}
+.zchip{display:inline-flex;align-items:center;gap:8px;font-weight:600}
+.zchip i{width:10px;height:10px;border-radius:50%}
+.fontes{margin-top:8px;padding-left:18px;color:#3a3a3a;font-size:.92rem}
+.fontes li{margin-bottom:6px}
+.light a{color:#0B0B0B;font-weight:700;text-decoration-color:var(--amarelo);text-decoration-thickness:2px;text-underline-offset:3px}
+.tabela-wrap{overflow-x:auto}
+
+.cta{background:var(--amarelo);color:#0B0B0B;padding:48px 0}
+.cta .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.cta h2{font-size:clamp(1.5rem,3vw,2.1rem);max-width:19em}
+.cta p{margin-top:8px;color:#2a2a2a}
+.foot{padding:28px 0;color:var(--texto-fraco);font-size:.84rem}
+.foot .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:960px){
+  .hero-grid,.metodo{grid-template-columns:1fr}
+  .ufs{grid-template-columns:1fr}
+  .nav{display:none}
+  .top .btn{margin-left:auto}
+}
+@media (max-width:420px){
+  .wrap{padding:0 16px}
+  .numeros,.cards{grid-template-columns:1fr}
+  .escala-rotulos{font-size:.66rem}
+  .uf{grid-template-columns:30px 1fr 86px 56px;gap:8px}
+  .zona-nome{font-size:1.3rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* Termômetro 0-100 */
+.semaforo{display:grid;grid-template-columns:40fr 20fr 40fr;gap:2px;height:14px;border-radius:7px;overflow:hidden}
+.semaforo span:nth-child(1){background:var(--vermelho)}
+.semaforo span:nth-child(2){background:var(--amarelo)}
+.semaforo span:nth-child(3){background:var(--verde)}
+.sem-rot{position:relative;height:18px;margin-top:8px;font-family:var(--mono);font-size:.7rem;color:var(--texto-fraco)}
+.sem-rot span{position:absolute;transform:translateX(-50%)}
+.score small{font-size:.32em;color:var(--texto-suave);font-weight:700;letter-spacing:0;margin-left:4px}
+.faixa-chip{font-family:var(--mono);font-size:.78rem;font-weight:600;padding:5px 10px;border-radius:999px;color:#0B0B0B;display:inline-block}
+.pil-lista{display:flex;flex-direction:column;gap:14px;background:var(--superficie);border:1px solid var(--linha);border-radius:12px;padding:22px}
+.pil-l{display:grid;grid-template-columns:96px 1fr 44px;gap:12px;align-items:center;font-size:.9rem}
+.pil-l .nm{font-weight:600}
+.pil-l .nm small{display:block;font-family:var(--mono);font-size:.68rem;color:var(--texto-fraco);font-weight:500}
+.pil-l .bar{height:10px;background:var(--superficie-2);border-radius:2px;overflow:hidden}
+.pil-l .bar span{display:block;height:100%;border-radius:2px}
+.pil-l .pt{text-align:right;font-weight:700}
+.pil-l.vazio .pt{color:var(--texto-fraco);font-weight:500;font-size:.78rem}
+.pcard{background:var(--superficie);border:1px solid var(--linha);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.pcard-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.pcard h3{font-weight:800;font-size:1.15rem;letter-spacing:-.015em}
+.pcard .peso{font-family:var(--mono);font-size:.7rem;color:var(--texto-fraco)}
+.pcard .pp{font-weight:800;font-size:1.9rem;letter-spacing:-.03em;line-height:1}
+.pcard .pp small{font-size:.45em;color:var(--texto-suave);font-weight:600}
+.pcard>p{color:var(--texto-suave);font-size:.86rem}
+.ind{border-top:1px solid var(--linha);padding-top:12px;display:flex;flex-direction:column;gap:6px}
+.ind-top{display:flex;justify-content:space-between;gap:10px;font-size:.88rem}
+.ind-top b{font-weight:600}
+.ind-top .v{font-weight:700;white-space:nowrap}
+.ind .meta{font-family:var(--mono);font-size:.68rem;color:var(--texto-fraco)}
+.jan{position:relative;height:6px;background:var(--superficie-2);border-radius:3px;margin:6px 0 2px}
+.jan i{position:absolute;top:-4px;width:3px;height:14px;margin-left:-1.5px;background:#fff;border-radius:2px}
+.jan-rot{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.64rem;color:var(--texto-fraco)}
+.ind.fora{opacity:.55}
+.ind.fora .v{font-weight:500;font-size:.78rem;color:var(--texto-fraco)}
+.aviso-pilar{font-size:.8rem;color:var(--amarelo)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#topo"><i aria-hidden="true"></i>ConstruExpert</a>
+    <nav class="nav" aria-label="Seções">
+      <a href="#topo" aria-current="page">Termômetro</a><a href="#pilares">Pilares</a><a href="#historico">Histórico</a><a href="#estados">Custo por estado</a><a href="#metodo">Metodologia</a>
+    </nav>
+    <a class="btn btn-y btn-sm" href="https://construexpert.substack.com/subscribe" target="_blank" rel="noopener">Assinar grátis</a>
+  </div>
+</header>
+
+<main id="topo">
+<section class="hero" aria-labelledby="t-hero">
+  <div class="wrap">
+    <p class="rotulo">Termômetro ConstruExpert · o ciclo da construção civil</p>
+    <h1 class="disp" id="t-hero">Em que fase está a <span class="marca-a">construção no Brasil?</span></h1>
+    <div class="hero-grid">
+      <div class="leitura" aria-live="polite">
+        <div class="leitura-top">
+          <div>
+            <p class="rotulo">Termômetro ConstruExpert</p>
+            <div class="score num" id="score">–</div>
+          </div>
+          <div style="text-align:right">
+            <span class="faixa-chip" id="faixa">–</span>
+            <p class="leitura-sub" id="faixa-sub"></p>
+          </div>
+        </div>
+        <div class="escala" aria-hidden="true">
+          <div class="semaforo"><span></span><span></span><span></span></div>
+          <div class="marcador" id="marcador"></div>
+          <div class="sem-rot"><span style="left:0;transform:none">0</span><span style="left:40%">40</span><span style="left:60%">60</span><span style="left:100%;transform:translateX(-100%)">100</span></div>
+        </div>
+        <p class="leitura-sub" id="variacao" style="margin-top:14px"></p>
+      </div>
+      <div class="pil-lista" id="pil-lista" aria-label="Pontuação dos pilares"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="pilares" aria-labelledby="t-pil">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="rotulo">Detalhamento</p>
+        <h2 class="disp" id="t-pil">Os cinco pilares</h2>
+        <p>Cada indicador ganha uma pontuação de 0 a 100 comparando a leitura do mês com o pior e o melhor valor dos últimos 60 meses. A régua de cada um mostra onde ele está dentro dessa janela.</p>
+      </div>
+    </div>
+    <div class="cards" id="pcards"></div>
+  </div>
+</section>
+
+<section class="sec" id="historico" aria-labelledby="t-hist">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="rotulo">Histórico mensal</p>
+        <h2 class="disp" id="t-hist">O Termômetro mês a mês</h2>
+        <p>Cada ponto recalcula a nota com os dados que existiam naquele mês.</p>
+      </div>
+      <div class="acoes" role="group" aria-label="Período">
+        <button class="btn-ghost" type="button" data-per="0">Tudo</button>
+        <button class="btn-ghost" type="button" data-per="5">5 anos</button>
+        <button class="btn-ghost" type="button" data-per="1" aria-pressed="true">12 meses</button>
+      </div>
+    </div>
+    <div class="grafico-box">
+      <div class="grafico-head">
+        <h3>Termômetro ConstruExpert (0 a 100)</h3>
+        <div class="legenda"><span><i style="background:var(--verde)"></i>Verde, expansão</span><span><i style="background:var(--amarelo)"></i>Amarelo, atenção</span><span><i style="background:var(--vermelho)"></i>Vermelho, cautela</span></div>
+      </div>
+      <div class="grafico" id="g-score"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="estados" aria-labelledby="t-uf">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="rotulo">SINAPI · IBGE</p>
+        <h2 class="disp" id="t-uf">Quanto custa construir 1 m² em cada estado</h2>
+        <p>Custo médio do metro quadrado (materiais e mão de obra) e a alta em 12 meses. Rio Grande do Sul e Santa Catarina em destaque. Não entra na nota.</p>
+      </div>
+    </div>
+    <div class="ufs" id="ufs"></div>
+  </div>
+</section>
+
+<section class="sec light" id="metodo" aria-labelledby="t-met">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="rotulo">Metodologia v1.0</p><h2 class="disp" id="t-met">Como o Termômetro é calculado</h2></div></div>
+    <div class="metodo">
+      <div>
+        <h3>A conta</h3>
+        <p>Cada indicador vira uma pontuação de 0 a 100: a leitura do mês comparada ao mínimo e ao máximo dos últimos 60 meses. Onde menor é melhor (INCC, CUB, Selic), a escala se inverte. Cada pilar é a média dos seus indicadores, e o Termômetro soma os pilares pelo peso.</p>
+        <p>Cada indicador entra com a última leitura divulgada, e as datas aparecem ao lado de cada número, porque as fontes saem em dias diferentes. Quando um pilar ainda não tem nenhum dado, ele fica de fora e os pesos dos outros são reescalados para somar 100%.</p>
+        <table aria-label="Faixas do semáforo"><thead><tr><th>Faixa</th><th>Termômetro</th><th style="text-align:left">Leitura</th></tr></thead>
+          <tbody>
+            <tr><td><span class="zchip"><i style="background:#e5534b"></i>Vermelho</span></td><td>0 a 39</td><td style="text-align:left;white-space:normal">Cautela: custo alto, crédito caro ou demanda fraca pesam contra o ciclo</td></tr>
+            <tr><td><span class="zchip"><i style="background:#FFC400"></i>Amarelo</span></td><td>40 a 59</td><td style="text-align:left;white-space:normal">Atenção: sinais mistos, sem direção clara</td></tr>
+            <tr><td><span class="zchip"><i style="background:#3fb950"></i>Verde</span></td><td>60 a 100</td><td style="text-align:left;white-space:normal">Expansão: confiança, crédito e demanda sustentam o ciclo</td></tr>
+          </tbody></table>
+      </div>
+      <div>
+        <h3>Pilares, indicadores e pesos</h3>
+        <div class="tabela-wrap"><table aria-label="Pilares e pesos"><thead><tr><th>Pilar</th><th style="text-align:left">Indicadores</th><th>Peso</th></tr></thead><tbody id="t-pilares"></tbody></table></div>
+        <h3 style="margin-top:28px">Fontes</h3>
+        <ul class="fontes">
+          <li><a href="https://dadosabertos.bcb.gov.br/" target="_blank" rel="noopener">Banco Central (SGS)</a>: Selic e INCC-M.</li>
+          <li><a href="http://www.ipeadata.gov.br/" target="_blank" rel="noopener">Ipeadata</a>: Índice de Confiança da Construção (FGV IBRE).</li>
+          <li><a href="https://sidra.ibge.gov.br/" target="_blank" rel="noopener">IBGE · SIDRA</a>: varejo de material de construção (PMC) e SINAPI.</li>
+          <li>Sinduscons, Abecip, SNIC e Novo Caged: lançados à mão uma vez por mês, junto com a edição.</li>
+        </ul>
+        <p style="margin-top:12px" id="atualizado"></p>
+        <p>O Termômetro é uma leitura analítica do ciclo e não uma recomendação de investimento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" aria-labelledby="t-cta">
+  <div class="wrap">
+    <div>
+      <h2 class="disp" id="t-cta">O Termômetro explicado, todo dia 15, no seu e-mail.</h2>
+      <p>A edição mensal mostra o que mexeu no número e o que fazer com isso na obra, na loja e no projeto.</p>
+    </div>
+    <a class="btn btn-k" href="https://construexpert.substack.com/subscribe" target="_blank" rel="noopener">Assinar a newsletter</a>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 ConstruExpert. Educação para profissionais da construção.</span>
+    <span>Dados públicos, atualizados uma vez por dia.</span>
+  </div>
+</footer>
+
+<script type="application/json" id="dados-embutidos"></script>
+<script>
+(function(){
+"use strict";
+var FAIXAS={Vermelho:{hex:"#e5534b",txt:"Cautela: custo alto, crédito caro ou demanda fraca pesam contra o ciclo"},
+            Amarelo:{hex:"#FFC400",txt:"Atenção: sinais mistos, sem direção clara"},
+            Verde:{hex:"#3fb950",txt:"Expansão: confiança, crédito e demanda sustentam o ciclo"}};
+function faixaDe(t){return t<40?"Vermelho":(t<60?"Amarelo":"Verde");}
+var fN=function(v,d){return v.toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});};
+var MESES=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+var fMes=function(m){var p=m.split("-");return MESES[+p[1]-1]+"/"+p[0];};
+function fVal(i,v){
+  if(i.un==="vagas") return Math.round(v).toLocaleString("pt-BR");
+  if(i.un==="pts") return fN(v,1);
+  if(i.un==="% a.a.") return fN(v,2)+"%";
+  return (v>0?"+":"")+fN(v,2)+"%";
+}
+
+function iniciar(D){
+  var T=D.termometro, F=FAIXAS[D.faixa]||FAIXAS[faixaDe(T)];
+  document.getElementById("score").innerHTML=Math.round(T)+"<small>/100</small>";
+  var fc=document.getElementById("faixa"); fc.textContent=D.faixa; fc.style.background=F.hex;
+  document.getElementById("faixa-sub").textContent=F.txt+".";
+  document.getElementById("marcador").style.left=Math.max(0,Math.min(100,T)).toFixed(1)+"%";
+  var H=D.historico||[];
+  if(H.length>1){
+    var a=H[H.length-1], b=H[H.length-2], dlt=a[1]-b[1];
+    document.getElementById("variacao").textContent=(dlt>=0?"+":"")+fN(dlt,1)+" ponto"+(Math.abs(dlt)>=2||Math.abs(dlt)<1?"s":"")+" contra "+fMes(b[0])+". Leituras até "+fMes(D.mes_ref)+".";
+  }
+  document.getElementById("atualizado").textContent="Página atualizada em "+new Date(D.gerado_em).toLocaleDateString("pt-BR")+".";
+
+  /* Pilares no topo */
+  var semDado=D.pilares.filter(function(p){return p.pontos==null;});
+  document.getElementById("pil-lista").innerHTML='<p class="rotulo">Os pilares (0 a 100)</p>'+D.pilares.map(function(p){
+    if(p.pontos==null) return '<div class="pil-l vazio"><span class="nm">'+p.nome+'<small>peso '+p.peso+'%</small></span><div class="bar"></div><span class="pt">sem dado</span></div>';
+    return '<div class="pil-l"><span class="nm">'+p.nome+'<small>peso '+p.peso+'%</small></span><div class="bar"><span style="width:'+p.pontos+'%;background:'+FAIXAS[faixaDe(p.pontos)].hex+'"></span></div><span class="pt num">'+Math.round(p.pontos)+'</span></div>';
+  }).join("")+(semDado.length?'<p class="aviso-pilar">'+semDado.map(function(p){return p.nome;}).join(" e ")+' ainda sem dado: peso redistribuído entre os demais.</p>':'');
+
+  /* Cartões por pilar */
+  document.getElementById("pcards").innerHTML=D.pilares.map(function(p){
+    var its=D.indicadores.filter(function(i){return i.pilar===p.id;});
+    var cor=p.pontos==null?"#444":FAIXAS[faixaDe(p.pontos)].hex;
+    return '<article class="pcard" style="border-top:4px solid '+cor+'"><div class="pcard-top"><div><h3>'+p.nome+'</h3><span class="peso">peso '+p.peso+'%</span></div>'+
+      '<div class="pp num">'+(p.pontos==null?'<small>sem dado</small>':Math.round(p.pontos)+'<small>/100</small>')+'</div></div><p>'+p.explica+'</p>'+
+      its.map(function(i){
+        if(!i.tem) return '<div class="ind fora"><div class="ind-top"><b>'+i.nome+'</b><span class="v">fora do cálculo</span></div><span class="meta">'+i.fonte+' · ainda sem série lançada</span></div>';
+        var pos=i.max===i.min?50:(i.valor-i.min)/(i.max-i.min)*100;
+        var esq=i.menor_melhor?"melhor":"pior", dir=i.menor_melhor?"pior":"melhor";
+        return '<div class="ind"><div class="ind-top"><b>'+i.nome+'</b><span class="v num">'+fVal(i,i.valor)+'</span></div>'+
+          '<div class="jan" aria-hidden="true"><i style="left:'+pos.toFixed(1)+'%"></i></div>'+
+          '<div class="jan-rot"><span>'+fVal(i,i.min)+' ('+esq+')</span><span>'+fVal(i,i.max)+' ('+dir+')</span></div>'+
+          '<span class="meta">'+fMes(i.mes)+' · pontuação '+Math.round(i.s)+' · '+i.fonte+'</span></div>';
+      }).join("")+'</article>';
+  }).join("");
+
+  /* Tabela da metodologia */
+  document.getElementById("t-pilares").innerHTML=D.pilares.map(function(p){
+    var its=D.indicadores.filter(function(i){return i.pilar===p.id;}).map(function(i){return i.nome+(i.menor_melhor?" (menor é melhor)":"");}).join("; ");
+    return '<tr><td><b>'+p.nome+'</b></td><td style="text-align:left;white-space:normal">'+its+'</td><td>'+p.peso+'%</td></tr>';
+  }).join("");
+
+  /* Custo por estado */
+  var S=D.sinapi||{};
+  if(S.ufs&&S.ufs.length){
+    var fR=function(v){return "R$ "+fN(v,2);}, max=S.ufs[0].custo, metade=Math.ceil(S.ufs.length/2);
+    var linha=function(u){return '<div class="uf'+(u.uf==="RS"||u.uf==="SC"?" real":"")+'"><b>'+u.uf+'</b><div class="barra" title="'+u.nome+'"><span style="width:'+(u.custo/max*100).toFixed(1)+'%"></span></div><span class="c num">'+fR(u.custo)+'</span><span class="p num">'+(u.var12!=null?(u.var12>0?"+":"")+fN(u.var12,1)+"%":"–")+'</span></div>';};
+    var cab='<div class="uf uf-cab"><span>UF</span><span>'+fMes(S.ref)+'</span><span style="text-align:right">R$/m²</span><span style="text-align:right">12 meses</span></div>';
+    document.getElementById("ufs").innerHTML='<div>'+cab+S.ufs.slice(0,metade).map(linha).join("")+'</div><div>'+cab+S.ufs.slice(metade).map(linha).join("")+'</div>';
+  } else document.getElementById("estados").hidden=true;
+
+  /* Histórico */
+  var periodo=1;
+  document.querySelectorAll("[data-per]").forEach(function(b){ b.onclick=function(){ periodo=+b.dataset.per; document.querySelectorAll("[data-per]").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false");}); desenhar(); }; });
+  var NS="http://www.w3.org/2000/svg";
+  function el(t,a,p){var e=document.createElementNS(NS,t); for(var k in a)e.setAttribute(k,a[k]); if(p)p.appendChild(e); return e;}
+  function desenhar(){
+    var serie=H.slice(); if(periodo&&serie.length) serie=serie.slice(-(periodo*12));
+    var box=document.getElementById("g-score"), W=Math.max(320,box.clientWidth), ml=36, mr=14, n=serie.length;
+    var Ht=240, mt=10, mb=26, ih=Ht-mt-mb, iw=W-ml-mr;
+    var x=function(k){return ml+(n<2?iw/2:k*iw/(n-1));}, y=function(v){return mt+ih*(1-v/100);};
+    var svg=el("svg",{viewBox:"0 0 "+W+" "+Ht,role:"img","aria-label":"Termômetro ConstruExpert mês a mês, de 0 a 100"});
+    [[100,60,"#3fb950"],[60,40,"#FFC400"],[40,0,"#e5534b"]].forEach(function(f){el("rect",{x:ml,y:y(f[0]),width:iw,height:y(f[1])-y(f[0]),fill:f[2],"fill-opacity":"0.1"},svg);});
+    [0,20,40,60,80,100].forEach(function(v){var yy=y(v); el("line",{x1:ml,x2:W-mr,y1:yy,y2:yy,stroke:"#fff","stroke-opacity":(v===40||v===60)?"0.22":"0.06"},svg); var t=el("text",{x:ml-8,y:yy+4,"text-anchor":"end"},svg); t.textContent=v;});
+    var passo=n<=13?1:(n<=60?6:12), vistos={};
+    serie.forEach(function(o,k){ if(n<=13){ if(k%2&&k!==n-1)return; } else { if(o[0].slice(5)!=="01")return; if(passo===12&&vistos[o[0].slice(0,4)])return; } vistos[o[0].slice(0,4)]=1; var t=el("text",{x:x(k),y:Ht-6,"text-anchor":"middle"},svg); t.textContent=n<=13?fMes(o[0]):o[0].slice(0,4); });
+    var d=serie.map(function(o,k){return (k?"L":"M")+x(k).toFixed(1)+","+y(o[1]).toFixed(1);}).join("");
+    el("path",{d:d,fill:"none",stroke:"#fff","stroke-width":"2","stroke-linejoin":"round"},svg);
+    if(n) { var u=serie[n-1]; el("circle",{cx:x(n-1),cy:y(u[1]),r:5,fill:FAIXAS[faixaDe(u[1])].hex,stroke:"#161616","stroke-width":2},svg);
+      if(n<=13){ var lt=el("text",{x:x(n-1)-8,y:y(u[1])-10,"text-anchor":"end",style:"fill:#fff;font-weight:600"},svg); lt.textContent=fN(u[1],1); } }
+    box.innerHTML=""; box.appendChild(svg);
+    var lin=el("line",{y1:mt,y2:mt+ih,stroke:"#fff","stroke-opacity":"0.5","stroke-dasharray":"3 3",visibility:"hidden"},svg);
+    var pto=el("circle",{r:5,fill:"#fff",stroke:"#0B0B0B","stroke-width":2,visibility:"hidden"},svg);
+    var tip=document.createElement("div"); tip.className="tip"; box.appendChild(tip);
+    var hit=el("rect",{x:ml,y:0,width:iw,height:Ht,fill:"transparent"},svg);
+    function mover(ev){ var r=svg.getBoundingClientRect(), px=(ev.clientX-r.left)*W/r.width, k=Math.round((px-ml)/(iw/(n-1||1))); k=Math.max(0,Math.min(n-1,k));
+      var o=serie[k], xx=x(k); lin.setAttribute("x1",xx); lin.setAttribute("x2",xx); lin.setAttribute("visibility","visible");
+      pto.setAttribute("cx",xx); pto.setAttribute("cy",y(o[1])); pto.setAttribute("visibility","visible");
+      var f=faixaDe(o[1]); tip.innerHTML='<b>'+fMes(o[0])+'</b><div class="l"><span>Termômetro</span><span class="num">'+fN(o[1],1)+'</span></div><div class="l"><span>Faixa</span><span style="color:'+FAIXAS[f].hex+';font-weight:600">'+f+'</span></div>';
+      var sx=r.width/W, left=xx*sx+14; if(left+190>r.width) left=xx*sx-190; tip.style.left=left+"px"; tip.style.top="12px"; tip.style.opacity=1; }
+    hit.addEventListener("pointermove",mover); hit.addEventListener("pointerdown",mover);
+    hit.addEventListener("pointerleave",function(){lin.setAttribute("visibility","hidden");pto.setAttribute("visibility","hidden");tip.style.opacity=0;});
+  }
+  var rt; window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(desenhar,120);});
+  desenhar();
+}
+var bruto=document.getElementById("dados-embutidos").textContent.trim();
+if(bruto&&bruto.charAt(0)==="{") iniciar(JSON.parse(bruto));
+else fetch("dados.json",{cache:"no-store"}).then(function(r){return r.json();}).then(iniciar).catch(function(){
+  document.getElementById("faixa").textContent="Dados indisponíveis";
+  document.getElementById("faixa-sub").textContent="Não foi possível carregar dados.json. Tente recarregar a página.";
+});
+})();
+</script>
+</body>
+</html>

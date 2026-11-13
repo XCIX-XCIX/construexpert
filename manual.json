@@ -1,0 +1,8 @@
+{
+  "_como_usar": "Séries mensais dos indicadores que não têm API aberta. Formato: \"AAAA-MM\": valor. Acrescente o mês novo junto com a edição do dia 15; a página recalcula sozinha. Precisa de pelo menos 12 meses de histórico para o indicador entrar na conta. Vazio = indicador ainda fora do cálculo.",
+  "cub_rs": {},
+  "cub_sc": {},
+  "sbpe": {},
+  "cimento": {},
+  "caged": {}
+}
