@@ -4,7 +4,8 @@ on:
     - cron: "23 10 * * *"   # todo dia, 7h23 em Brasília
   workflow_dispatch: {}      # botão "Run workflow" para atualizar na hora
   push:
-    paths: ["manual.json"]   # recalcula quando os dados manuais do mês mudam
+    branches: [main]
+    paths: ["manual.json", "scripts/**", ".github/workflows/**"]   # recalcula quando os dados manuais ou o código mudam
 permissions:
   contents: write
 concurrency: atualizar
