@@ -219,6 +219,49 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
 .ind.fora{opacity:.55}
 .ind.fora .v{font-weight:500;font-size:.78rem;color:var(--texto-fraco)}
 .aviso-pilar{font-size:.8rem;color:var(--amarelo)}
+
+/* Caminhos, materiais, minicursos e marcas */
+.caminhos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.caminho{display:flex;flex-direction:column;gap:6px;text-decoration:none;background:var(--fundo);border:1px solid var(--linha);border-radius:12px;padding:18px 20px;transition:border-color .15s}
+.caminho:hover{border-color:var(--amarelo)}
+.caminho b{font-weight:800;font-size:1.02rem;letter-spacing:-.01em}
+.caminho span{color:var(--texto-suave);font-size:.86rem}
+.caminho em{font-style:normal;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--amarelo);margin-top:auto;padding-top:6px}
+.ebooks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ebook{background:var(--claro);color:#0B0B0B;border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px;border-top:6px solid var(--amarelo)}
+.ebook .n{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#555}
+.ebook h3{font-weight:800;font-size:1.12rem;letter-spacing:-.015em;line-height:1.2}
+.ebook p{color:#3a3a3a;font-size:.88rem}
+.ebook .btn{margin-top:auto;align-self:flex-start}
+.ebook .curso{font-family:var(--mono);font-size:.68rem;color:#666}
+.nota-isca{color:var(--texto-suave);font-size:.88rem;margin-top:18px}
+.nota-isca a{color:var(--amarelo);font-weight:700}
+.faixa-cursos{margin-top:28px;background:var(--superficie);border:1px solid var(--linha);border-left:4px solid var(--amarelo);border-radius:12px;padding:24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.faixa-cursos h3{font-weight:800;font-size:1.3rem;letter-spacing:-.02em}
+.faixa-cursos p{color:var(--texto-suave);font-size:.9rem;margin-top:6px;max-width:40em}
+.marcas{background:#000}
+.marcas-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.marcas-grid h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+.marcas-grid .lead{color:#d4d4d4;margin-top:14px;max-width:32em}
+.marcas-pontos{list-style:none;padding:0;margin:22px 0 26px;display:flex;flex-direction:column;gap:10px}
+.marcas-pontos li{display:flex;gap:10px;color:#d4d4d4;font-size:.95rem}
+.marcas-pontos li::before{content:"";flex:none;width:10px;height:10px;margin-top:7px;background:var(--amarelo)}
+.trilhas{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--linha);border:1px solid var(--linha);border-radius:12px;overflow:hidden}
+.trilhas div{background:var(--superficie);padding:12px 14px;font-size:.86rem;font-weight:600;display:flex;gap:10px}
+.trilhas div b{font-family:var(--mono);font-weight:500;color:var(--amarelo);font-size:.74rem;padding-top:2px}
+.btn-wa{background:#25D366;color:#0B0B0B}
+.btn-wa:hover{background:#4ee283}
+.btn-line{background:transparent;color:#0B0B0B;border-color:#0B0B0B}
+.btn-line:hover{background:rgba(0,0,0,.08)}
+.cta .acoes-cta{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:960px){
+  .caminhos,.ebooks{grid-template-columns:1fr 1fr}
+  .marcas-grid{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .caminhos,.ebooks,.trilhas{grid-template-columns:1fr}
+  .btn{white-space:normal;text-align:center}
+}
 </style>
 </head>
 <body>
@@ -226,9 +269,9 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
   <div class="wrap">
     <a class="logo" href="#topo"><i aria-hidden="true"></i>ConstruExpert</a>
     <nav class="nav" aria-label="Seções">
-      <a href="#topo" aria-current="page">Termômetro</a><a href="#pilares">Pilares</a><a href="#historico">Histórico</a><a href="#estados">Custo por estado</a><a href="#metodo">Metodologia</a>
+      <a href="#topo" aria-current="page">Termômetro</a><a href="#pilares">Pilares</a><a href="#estados">Custo por estado</a><a href="#materiais">Materiais grátis</a><a href="#minicursos">Minicursos</a><a href="#marcas">Para marcas</a>
     </nav>
-    <a class="btn btn-y btn-sm" href="https://construexpert.substack.com/subscribe" target="_blank" rel="noopener">Assinar grátis</a>
+    <a class="btn btn-y btn-sm" href="https://construexpert.substack.com/subscribe?utm_source=site&amp;utm_medium=termometro&amp;utm_campaign=cta-topo" target="_blank" rel="noopener">Receber os indicadores</a>
   </div>
 </header>
 
@@ -258,6 +301,11 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
       </div>
       <div class="pil-lista" id="pil-lista" aria-label="Pontuação dos pilares"></div>
     </div>
+    <nav class="caminhos" aria-label="Por onde começar">
+      <a class="caminho" href="#materiais"><b>Trabalho em obra</b><span>Pedreiro, mestre, empreiteiro, técnico ou engenheiro: 6 e-books práticos para orçar, cobrar e trabalhar melhor.</span><em>Baixar grátis ↓</em></a>
+      <a class="caminho" href="#minicursos"><b>Quero aprender mais</b><span>Cada e-book vai virar um minicurso em vídeo. Entre na lista e seja avisado primeiro.</span><em>Entrar na lista ↓</em></a>
+      <a class="caminho" href="#marcas"><b>Represento uma marca</b><span>Fabricantes, distribuidores e lojas: patrocine uma trilha de conteúdo técnico para quem compra e especifica.</span><em>Ver as trilhas ↓</em></a>
+    </nav>
   </div>
 </section>
 
@@ -311,6 +359,74 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
   </div>
 </section>
 
+<section class="sec" id="materiais" aria-labelledby="t-mat">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="rotulo">Materiais gratuitos · ConstruExpert</p>
+        <h2 class="disp" id="t-mat">Os dados mostram o cenário. A próxima decisão é sua.</h2>
+        <p>Seis e-books curtos, feitos para usar no canteiro e no celular. Baixe, imprima e passe para a equipe.</p>
+      </div>
+    </div>
+    <div class="ebooks">
+      <article class="ebook"><p class="n">E-book 01</p><h3>Como orçar e cobrar o serviço</h3><p>Diária, empreitada e material: como chegar a um preço justo, explicar para o cliente e receber sem discussão.</p><a class="btn btn-k" href="../materiais/como-orcar-e-cobrar-o-servico.pdf" target="_blank" rel="noopener" data-ebook="orcar-cobrar">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
+      <article class="ebook"><p class="n">E-book 02</p><h3>7 erros que fazem o profissional perder dinheiro</h3><p>Onde a diária escapa, quanto custa cada furo e o que fazer no lugar.</p><a class="btn btn-k" href="../materiais/7-erros-que-fazem-o-profissional-perder-dinheiro.pdf" target="_blank" rel="noopener" data-ebook="7-erros">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
+      <article class="ebook"><p class="n">E-book 03</p><h3>Checklist antes de começar o serviço</h3><p>Conferência de frente, medida, material e base: meia hora aqui evita um dia perdido.</p><a class="btn btn-k" href="../materiais/checklist-antes-de-comecar-o-servico.pdf" target="_blank" rel="noopener" data-ebook="checklist-servico">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
+      <article class="ebook"><p class="n">E-book 04</p><h3>Checklist de segurança básica no canteiro</h3><p>Conferência de início de dia para quem executa: se o item não passa, o serviço não começa.</p><a class="btn btn-k" href="../materiais/checklist-de-seguranca-basica-no-canteiro.pdf" target="_blank" rel="noopener" data-ebook="seguranca">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
+      <article class="ebook"><p class="n">E-book 05</p><h3>Como ler planta e projeto no canteiro</h3><p>O que olhar, em que ordem e como conferir o papel com a obra antes de iniciar.</p><a class="btn btn-k" href="../materiais/como-ler-planta-e-projeto-no-canteiro.pdf" target="_blank" rel="noopener" data-ebook="planta">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
+      <article class="ebook"><p class="n">E-book 06</p><h3>Como ser encontrado</h3><p>Portfólio, WhatsApp e indicação: como transformar serviço bem feito em novos clientes.</p><a class="btn btn-k" href="../materiais/como-ser-encontrado.pdf" target="_blank" rel="noopener" data-ebook="ser-encontrado">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
+    </div>
+    <p class="nota-isca">Gostou do material? <a href="https://construexpert.substack.com/subscribe?utm_source=site&amp;utm_medium=termometro&amp;utm_campaign=ebooks" target="_blank" rel="noopener">Assine a newsletter</a> e receba os próximos, junto com o Relatório de Mercado de todo dia 15.</p>
+  </div>
+</section>
+
+<section class="sec" id="minicursos" aria-labelledby="t-cur">
+  <div class="wrap">
+    <div class="faixa-cursos">
+      <div>
+        <p class="rotulo">Minicursos ConstruExpert · em produção</p>
+        <h3 id="t-cur">Os seis e-books vão virar minicursos em vídeo.</h3>
+        <p>Aulas curtas e práticas, com os modelos para usar no dia seguinte. Quem estiver na lista fica sabendo primeiro e entra com condição de lançamento.</p>
+      </div>
+      <a class="btn btn-y" href="https://chat.whatsapp.com/HiWnnU9bLOwJQwbIWMs6zj" target="_blank" rel="noopener">Entrar na lista pelo WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec marcas" id="marcas" aria-labelledby="t-mar">
+  <div class="wrap marcas-grid">
+    <div>
+      <p class="rotulo">Para fabricantes, distribuidores e lojas</p>
+      <h2 class="disp" id="t-mar">Sua marca ensinando <span class="marca-a">quem compra e especifica.</span></h2>
+      <p class="lead">A ConstruExpert organiza o conteúdo em trilhas técnicas. Cada trilha pode ter uma marca parceira, presente nas aulas, nos materiais e na newsletter, falando com profissionais no momento em que eles escolhem o que usar na obra.</p>
+      <ul class="marcas-pontos">
+        <li>Conteúdo técnico com a sua solução aplicada em casos reais de obra</li>
+        <li>Presença nos e-books, minicursos, newsletter e no Relatório de Mercado mensal</li>
+        <li>Ligação direta com a rede da Construsul e da Construsul BC</li>
+        <li>Cotas de parceiro fundador para as primeiras marcas de cada trilha</li>
+      </ul>
+      <a class="btn btn-wa" href="https://wa.me/5551999713119?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20ConstruExpert%20e%20quero%20conhecer%20as%20trilhas%20patrocinadas." target="_blank" rel="noopener" data-cta="b2b-whatsapp">Quero conhecer as cotas pelo WhatsApp</a>
+    </div>
+    <div>
+      <p class="rotulo" style="margin-bottom:12px">As 12 trilhas</p>
+      <div class="trilhas">
+        <div><b>01</b>Equipamentos, ferramentas e produtividade</div>
+        <div><b>02</b>Estruturas, concreto e sistemas construtivos</div>
+        <div><b>03</b>Pintura, revestimentos e acabamentos</div>
+        <div><b>04</b>Hidráulica, água e saneamento</div>
+        <div><b>05</b>Elétrica, energia e automação</div>
+        <div><b>06</b>Impermeabilização, vedação e durabilidade</div>
+        <div><b>07</b>Segurança e trabalho em altura</div>
+        <div><b>08</b>Gestão e tecnologia na construção</div>
+        <div><b>09</b>Conforto térmico, acústico e eficiência</div>
+        <div><b>10</b>Esquadrias, portas e envoltória</div>
+        <div><b>11</b>Construção sustentável e novas soluções</div>
+        <div><b>12</b>Gestão e venda técnica no varejo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="sec light" id="metodo" aria-labelledby="t-met">
   <div class="wrap">
     <div class="sec-head"><div><p class="rotulo">Metodologia v1.1</p><h2 class="disp" id="t-met">Como o Termômetro é calculado</h2></div></div>
@@ -350,7 +466,10 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
       <h2 class="disp" id="t-cta">O Termômetro explicado, todo dia 15, no seu e-mail.</h2>
       <p>A edição mensal mostra o que mexeu no número e o que fazer com isso na obra, na loja e no projeto.</p>
     </div>
-    <a class="btn btn-k" href="https://construexpert.substack.com/subscribe" target="_blank" rel="noopener">Assinar a newsletter</a>
+    <div class="acoes-cta">
+      <a class="btn btn-k" href="https://construexpert.substack.com/subscribe?utm_source=site&amp;utm_medium=termometro&amp;utm_campaign=cta-final" target="_blank" rel="noopener">Quero receber os indicadores</a>
+      <a class="btn btn-line" href="https://chat.whatsapp.com/HiWnnU9bLOwJQwbIWMs6zj" target="_blank" rel="noopener">Grupo no WhatsApp</a>
+    </div>
   </div>
 </section>
 </main>
@@ -362,6 +481,17 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
   </div>
 </footer>
 
+<script>
+// Enquanto um PDF ainda não estiver no site, o botão leva ao grupo do WhatsApp, onde os e-books são enviados.
+(function(){
+  var grupo='https://chat.whatsapp.com/HiWnnU9bLOwJQwbIWMs6zj';
+  document.querySelectorAll('a[data-ebook]').forEach(function(a){
+    fetch(a.getAttribute('href'),{method:'HEAD'}).then(function(r){
+      if(!r.ok){a.href=grupo;a.textContent='Receber grátis no WhatsApp';}
+    }).catch(function(){});
+  });
+})();
+</script>
 <script type="application/json" id="dados-embutidos"></script>
 <script>
 (function(){
