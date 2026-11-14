@@ -6,12 +6,22 @@
 <title>Termômetro ConstruExpert</title>
 <meta name="description" content="Em que fase está a construção civil no Brasil? Custo, confiança, crédito, atividade e emprego numa nota de 0 a 100, atualizada todo dia, com o custo do m² em cada estado.">
 <meta name="theme-color" content="#0B0B0B">
+<link rel="icon" href="../marca/icone.svg" type="image/svg+xml">
+<link rel="icon" href="../marca/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../marca/apple-touch-icon.png">
+<meta property="og:site_name" content="ConstruExpert">
+<meta property="og:title" content="Termômetro ConstruExpert">
+<meta property="og:description" content="Em que fase está a construção civil no Brasil? Uma nota de 0 a 100, atualizada todo dia.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://xcix-xcix.github.io/construexpert/termometro/">
+<meta property="og:image" content="https://xcix-xcix.github.io/construexpert/marca/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Identidade ConstruExpert: preto, amarelo e branco. Layout: leitura rápida no topo, indicadores, histórico, custo por estado, metodologia em faixa clara. */
+  /* Identidade ConstruExpert (logo do Canva): preto, laranja #FF9F1C e branco; títulos em Outfit, parente gratuita da Garet do logo. Layout: leitura rápida no topo, indicadores, histórico, custo por estado, metodologia em faixa clara. */
   --fundo:#0B0B0B;
   --superficie:#161616;
   --superficie-2:#202020;
@@ -19,10 +29,14 @@
   --texto-suave:#a8a8a8;
   --texto-fraco:#767676;
   --linha:#2c2c2c;
+  --marca:#FF9F1C;
+  --marca-claro:#FFB54D;
+  /* amarelo só no semáforo do Termômetro */
   --amarelo:#FFC400;
   --claro:#F5F2EA;
   /* Semáforo oficial do Termômetro: 0-39 vermelho, 40-59 amarelo, 60-100 verde */
   --vermelho:#e5534b; --verde:#3fb950;
+  --titulo:Outfit,Inter,system-ui,sans-serif;
   --sans:Inter,"SF Pro Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
   --wrap:1180px;
@@ -33,24 +47,26 @@ html{scroll-behavior:smooth;scroll-padding-top:76px}
 body{margin:0;background:var(--fundo);color:var(--texto);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 h1,h2,h3,p{margin:0}
-:focus-visible{outline:3px solid var(--amarelo);outline-offset:3px;border-radius:4px}
+:focus-visible{outline:3px solid var(--marca);outline-offset:3px;border-radius:4px}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
-.disp{font-weight:800;letter-spacing:-.025em;line-height:1.05;text-wrap:balance}
+.disp{font-family:var(--titulo);font-weight:800;letter-spacing:-.025em;line-height:1.05;text-wrap:balance}
 .rotulo{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--texto-suave)}
 .num{font-variant-numeric:tabular-nums}
-.marca-a{text-decoration:underline;text-decoration-color:var(--amarelo);text-decoration-thickness:.11em;text-underline-offset:.14em;text-decoration-skip-ink:none}
+.marca-a{text-decoration:underline;text-decoration-color:var(--marca);text-decoration-thickness:.11em;text-underline-offset:.14em;text-decoration-skip-ink:none}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;min-height:46px;padding:0 20px;font-weight:700;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;border-radius:6px;border:1.5px solid transparent;cursor:pointer}
-.btn-y{background:var(--amarelo);color:#0B0B0B}
-.btn-y:hover{background:#ffd23f}
+.btn-y{background:var(--marca);color:#0B0B0B}
+.btn-y:hover{background:var(--marca-claro)}
 .btn-k{background:#0B0B0B;color:#fff}
 .btn-k:hover{background:#262626}
 .btn-sm{min-height:40px;padding:0 14px;font-size:.76rem}
 
 .top{position:sticky;top:0;z-index:30;background:rgba(11,11,11,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--linha)}
 .top .wrap{display:flex;align-items:center;gap:28px;height:64px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-size:1.12rem;letter-spacing:-.02em;white-space:nowrap}
-.logo i{width:18px;height:18px;background:var(--amarelo);display:inline-block}
+.logo{display:flex;align-items:center;text-decoration:none;flex:none}
+.logo img{display:block;height:38px;width:auto}
+.foot-marca{display:flex;align-items:center;gap:14px}
+.foot-marca img{display:block;height:30px;width:auto}
 .nav{display:flex;gap:24px;margin-left:auto}
 .nav a{font-weight:600;font-size:.9rem;text-decoration:none;color:var(--texto-suave)}
 .nav a:hover,.nav a[aria-current]{color:#fff}
@@ -60,7 +76,7 @@ h1,h2,h3,p{margin:0}
 .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;margin-top:32px}
 .leitura{background:var(--superficie);border:1px solid var(--linha);border-radius:12px;padding:28px}
 .leitura-top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.score{font-weight:800;font-size:clamp(3.6rem,8vw,5.4rem);line-height:.9;letter-spacing:-.04em}
+.score{font-family:var(--titulo);font-weight:800;font-size:clamp(3.6rem,8vw,5.4rem);line-height:.9;letter-spacing:-.04em}
 .zona-nome{font-weight:800;font-size:1.6rem;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;justify-content:flex-end}
 .zona-dot{width:14px;height:14px;border-radius:50%;flex:none}
 .leitura-sub{color:var(--texto-suave);font-size:.92rem;margin-top:6px}
@@ -84,7 +100,7 @@ h1,h2,h3,p{margin:0}
 .numero{background:var(--fundo);padding:20px}
 .numero .v{font-weight:800;font-size:1.55rem;letter-spacing:-.03em;margin-top:6px}
 .numero .d{color:var(--texto-suave);font-size:.82rem;margin-top:2px}
-.numero.destaque .v{color:var(--amarelo)}
+.numero.destaque .v{color:var(--marca)}
 
 .sec{padding:56px 0;border-bottom:1px solid var(--linha)}
 .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:24px}
@@ -101,7 +117,7 @@ h1,h2,h3,p{margin:0}
 .chip{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.03em;padding:4px 9px;border-radius:999px;white-space:nowrap;color:#111}
 .card p{color:var(--texto-suave);font-size:.88rem}
 .card .det{color:#d4d4d4}
-.tag-manual{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--amarelo)}
+.tag-manual{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--marca)}
 .regua{position:relative;padding-top:4px}
 .regua-barra{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;height:6px}
 .regua-barra span{opacity:.85}
@@ -112,13 +128,13 @@ h1,h2,h3,p{margin:0}
 .toggle input{position:absolute;opacity:0;width:1px;height:1px}
 .sw{width:36px;height:20px;border-radius:999px;background:#404040;position:relative;flex:none;transition:background .2s}
 .sw::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .2s}
-.toggle input:checked + .sw{background:var(--amarelo)}
+.toggle input:checked + .sw{background:var(--marca)}
 .toggle input:checked + .sw::after{transform:translateX(16px);background:#0B0B0B}
-.toggle input:focus-visible + .sw{outline:3px solid var(--amarelo);outline-offset:2px}
+.toggle input:focus-visible + .sw{outline:3px solid var(--marca);outline-offset:2px}
 .acoes{display:flex;gap:8px;flex-wrap:wrap}
 .btn-ghost{background:transparent;border:1px solid var(--linha);color:var(--texto-suave);font-family:var(--sans);font-weight:600;font-size:.84rem;padding:8px 12px;border-radius:6px;cursor:pointer}
 .btn-ghost:hover{color:#fff;border-color:#555}
-.btn-ghost[aria-pressed="true"]{background:var(--amarelo);color:#0B0B0B;border-color:var(--amarelo)}
+.btn-ghost[aria-pressed="true"]{background:var(--marca);color:#0B0B0B;border-color:var(--marca)}
 
 .grafico-box{background:var(--superficie);border:1px solid var(--linha);border-radius:12px;padding:20px 16px 12px}
 .grafico-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:0 4px 12px}
@@ -140,8 +156,8 @@ h1,h2,h3,p{margin:0}
 .uf b{font-family:var(--mono);font-weight:600;color:var(--texto-suave)}
 .uf .barra{height:10px;background:var(--superficie-2);border-radius:2px;overflow:hidden}
 .uf .barra span{display:block;height:100%;background:#5a5a5a;border-radius:2px}
-.uf.real b{color:var(--amarelo)}
-.uf.real .barra span{background:var(--amarelo)}
+.uf.real b{color:var(--marca)}
+.uf.real .barra span{background:var(--marca)}
 .uf .c{text-align:right;font-weight:600}
 .uf .p{text-align:right;color:var(--texto-suave);font-size:.8rem}
 .uf-cab{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-fraco);border-bottom:1px solid #444}
@@ -159,15 +175,15 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
 .zchip i{width:10px;height:10px;border-radius:50%}
 .fontes{margin-top:8px;padding-left:18px;color:#3a3a3a;font-size:.92rem}
 .fontes li{margin-bottom:6px}
-.light a{color:#0B0B0B;font-weight:700;text-decoration-color:var(--amarelo);text-decoration-thickness:2px;text-underline-offset:3px}
+.light a{color:#0B0B0B;font-weight:700;text-decoration-color:var(--marca);text-decoration-thickness:2px;text-underline-offset:3px}
 .tabela-wrap{overflow-x:auto}
 
-.cta{background:var(--amarelo);color:#0B0B0B;padding:48px 0}
+.cta{background:var(--marca);color:#0B0B0B;padding:48px 0}
 .cta .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
 .cta h2{font-size:clamp(1.5rem,3vw,2.1rem);max-width:19em}
 .cta p{margin-top:8px;color:#2a2a2a}
 .foot{padding:28px 0;color:var(--texto-fraco);font-size:.84rem}
-.foot .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.foot .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 
 @media (max-width:960px){
   .hero-grid,.metodo{grid-template-columns:1fr}
@@ -218,25 +234,25 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
 .jan-rot{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.64rem;color:var(--texto-fraco)}
 .ind.fora{opacity:.55}
 .ind.fora .v{font-weight:500;font-size:.78rem;color:var(--texto-fraco)}
-.aviso-pilar{font-size:.8rem;color:var(--amarelo)}
+.aviso-pilar{font-size:.8rem;color:var(--marca)}
 
 /* Caminhos, materiais, minicursos e marcas */
 .caminhos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
 .caminho{display:flex;flex-direction:column;gap:6px;text-decoration:none;background:var(--fundo);border:1px solid var(--linha);border-radius:12px;padding:18px 20px;transition:border-color .15s}
-.caminho:hover{border-color:var(--amarelo)}
+.caminho:hover{border-color:var(--marca)}
 .caminho b{font-weight:800;font-size:1.02rem;letter-spacing:-.01em}
 .caminho span{color:var(--texto-suave);font-size:.86rem}
-.caminho em{font-style:normal;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--amarelo);margin-top:auto;padding-top:6px}
+.caminho em{font-style:normal;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--marca);margin-top:auto;padding-top:6px}
 .ebooks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.ebook{background:var(--claro);color:#0B0B0B;border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px;border-top:6px solid var(--amarelo)}
+.ebook{background:var(--claro);color:#0B0B0B;border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px;border-top:6px solid var(--marca)}
 .ebook .n{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#555}
 .ebook h3{font-weight:800;font-size:1.12rem;letter-spacing:-.015em;line-height:1.2}
 .ebook p{color:#3a3a3a;font-size:.88rem}
 .ebook .btn{margin-top:auto;align-self:flex-start}
 .ebook .curso{font-family:var(--mono);font-size:.68rem;color:#666}
 .nota-isca{color:var(--texto-suave);font-size:.88rem;margin-top:18px}
-.nota-isca a{color:var(--amarelo);font-weight:700}
-.faixa-cursos{margin-top:28px;background:var(--superficie);border:1px solid var(--linha);border-left:4px solid var(--amarelo);border-radius:12px;padding:24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.nota-isca a{color:var(--marca);font-weight:700}
+.faixa-cursos{margin-top:28px;background:var(--superficie);border:1px solid var(--linha);border-left:4px solid var(--marca);border-radius:12px;padding:24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 .faixa-cursos h3{font-weight:800;font-size:1.3rem;letter-spacing:-.02em}
 .faixa-cursos p{color:var(--texto-suave);font-size:.9rem;margin-top:6px;max-width:40em}
 .marcas{background:#000}
@@ -245,10 +261,10 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
 .marcas-grid .lead{color:#d4d4d4;margin-top:14px;max-width:32em}
 .marcas-pontos{list-style:none;padding:0;margin:22px 0 26px;display:flex;flex-direction:column;gap:10px}
 .marcas-pontos li{display:flex;gap:10px;color:#d4d4d4;font-size:.95rem}
-.marcas-pontos li::before{content:"";flex:none;width:10px;height:10px;margin-top:7px;background:var(--amarelo)}
+.marcas-pontos li::before{content:"";flex:none;width:10px;height:10px;margin-top:7px;background:var(--marca)}
 .trilhas{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--linha);border:1px solid var(--linha);border-radius:12px;overflow:hidden}
 .trilhas div{background:var(--superficie);padding:12px 14px;font-size:.86rem;font-weight:600;display:flex;gap:10px}
-.trilhas div b{font-family:var(--mono);font-weight:500;color:var(--amarelo);font-size:.74rem;padding-top:2px}
+.trilhas div b{font-family:var(--mono);font-weight:500;color:var(--marca);font-size:.74rem;padding-top:2px}
 .btn-wa{background:#25D366;color:#0B0B0B}
 .btn-wa:hover{background:#4ee283}
 .btn-line{background:transparent;color:#0B0B0B;border-color:#0B0B0B}
@@ -267,7 +283,7 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#topo"><i aria-hidden="true"></i>ConstruExpert</a>
+    <a class="logo" href="#topo"><img src="../marca/logo-branco.svg" alt="ConstruExpert" width="136" height="38"></a>
     <nav class="nav" aria-label="Seções">
       <a href="#topo" aria-current="page">Termômetro</a><a href="#pilares">Pilares</a><a href="#estados">Custo por estado</a><a href="#materiais">Materiais grátis</a><a href="#minicursos">Minicursos</a><a href="#marcas">Para marcas</a>
     </nav>
@@ -476,7 +492,7 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
 
 <footer class="foot">
   <div class="wrap">
-    <span>© 2026 ConstruExpert. Educação para profissionais da construção.</span>
+    <span class="foot-marca"><img src="../marca/logo-branco.svg" alt="ConstruExpert" width="107" height="30" loading="lazy"><span>© 2026 ConstruExpert. Especialização prática para profissionais da construção.</span></span>
     <span>Dados públicos, atualizados uma vez por dia.</span>
   </div>
 </footer>
