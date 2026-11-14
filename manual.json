@@ -1,8 +1,3 @@
 {
-  "_como_usar": "Séries mensais dos indicadores que não têm API aberta. Formato: \"AAAA-MM\": valor. Acrescente o mês novo junto com a edição do dia 15; a página recalcula sozinha. Precisa de pelo menos 12 meses de histórico para o indicador entrar na conta. Vazio = indicador ainda fora do cálculo.",
-  "cub_rs": {},
-  "cub_sc": {},
-  "sbpe": {},
-  "cimento": {},
-  "caged": {}
+  "_como_usar": "Desde a metodologia v1.1 todos os indicadores são automáticos. Este arquivo fica para uso futuro: uma série mensal aqui (\"id\": {\"AAAA-MM\": valor}) só entra se o indicador estiver marcado como manual em scripts/coleta_ce.py."
 }

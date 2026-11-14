@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
 """
-Termômetro ConstruExpert (metodologia oficial v1.0, a mesma da edição mensal do dia 15)
+Termômetro ConstruExpert, metodologia v1.1 (14/11/2026)
 
 T = soma dos pilares ponderados. Cada indicador vira S de 0 a 100 contra o mínimo e o
 máximo dos últimos 60 meses (menor é melhor: 100 * (max - x) / (max - min)).
 Pilar = média dos indicadores dele. Faixas: 0-39 vermelho, 40-59 amarelo, 60-100 verde.
-Pilar sem nenhum dado fica de fora e os pesos dos demais são reescalados (a página avisa).
+
+Tudo automático, de fontes oficiais com API aberta (sem chave):
+  Custo 25%      INCC-M 12m (BC SGS 7456) · SINAPI RS e SC, variação em 12 meses (SIDRA 2296 v1198)
+  Confiança 25%  ICST com ajuste (Ipeadata FGV12_ICSTCA12)
+  Crédito 20%    Selic (BC SGS 432, menor é melhor) · financiamento imobiliário PF, 12 meses x 12 anteriores (BC SGS 20704)
+  Atividade 15%  varejo de material de construção (SIDRA 8883 v11709) · insumos típicos da construção, 12 meses (SIDRA 8886 v11604)
+  Emprego 15%    ocupados na construção x mesmo trimestre móvel do ano anterior (PNAD Contínua, SIDRA 6323 v8435)
+v1.1 trocou CUB, SBPE, SNIC e Caged (sem API aberta) por SINAPI, BC 20704, PIM-PF e PNAD.
+Pilar sem dado fica de fora e os pesos dos demais são reescalados (a página avisa).
 
 Uso:
   python coleta_ce.py                     # busca tudo nas APIs (GitHub Actions)
   python coleta_ce.py --fixtures pasta/   # testes com arquivos salvos
-
-Automático (sem chave):
-  Banco Central SGS 432     Selic meta                                   (Crédito, menor é melhor)
-  Banco Central SGS 7456    INCC-M mensal -> acumulado em 12 meses       (Custo, menor é melhor)
-  Ipeadata FGV12_ICSTCA12   ICST, Índice de Confiança da Construção      (Confiança, maior é melhor)
-  IBGE SIDRA 8883           Varejo de material de construção (PMC)       (Atividade, maior é melhor)
-  IBGE SIDRA 2296           SINAPI: custo do m² por estado (só exibição)
-Manual (manual.json, séries mensais; vazio = ainda sem dado):
-  cub_rs, cub_sc (Custo) · sbpe (Crédito) · cimento (Atividade) · caged (Emprego)
 """
 import argparse, json, os, sys, urllib.request
 from datetime import date, datetime, timezone
@@ -35,22 +34,25 @@ PILARES = [
     {"id": "custo", "nome": "Custo", "peso": 25, "explica": "Quanto ficou mais caro construir. Menos alta é melhor."},
     {"id": "confianca", "nome": "Confiança", "peso": 25, "explica": "O humor dos empresários da construção."},
     {"id": "credito", "nome": "Crédito", "peso": 20, "explica": "Custo e oferta de dinheiro para obra e para o comprador."},
-    {"id": "atividade", "nome": "Atividade", "peso": 15, "explica": "Demanda real: material vendido e cimento consumido."},
-    {"id": "emprego", "nome": "Emprego", "peso": 15, "explica": "Vagas com carteira abertas pelo setor."},
+    {"id": "atividade", "nome": "Atividade", "peso": 15, "explica": "Demanda real: material de construção vendido e insumos produzidos."},
+    {"id": "emprego", "nome": "Emprego", "peso": 15, "explica": "Quantas pessoas trabalham na construção, com e sem carteira."},
 ]
 
 INDICADORES = [
     {"id": "incc", "pilar": "custo", "nome": "INCC-M em 12 meses", "un": "%", "menor_melhor": True, "fonte": "FGV IBRE via Banco Central (SGS 7456)", "auto": True},
-    {"id": "cub_rs", "pilar": "custo", "nome": "CUB/m² RS em 12 meses", "un": "%", "menor_melhor": True, "fonte": "Sinduscon-RS", "auto": False},
-    {"id": "cub_sc", "pilar": "custo", "nome": "CUB/m² SC em 12 meses", "un": "%", "menor_melhor": True, "fonte": "Sinduscon-SC", "auto": False},
+    {"id": "sinapi_rs", "pilar": "custo", "nome": "Custo do m² no RS em 12 meses", "un": "%", "menor_melhor": True, "fonte": "IBGE, SINAPI (SIDRA 2296)", "auto": True},
+    {"id": "sinapi_sc", "pilar": "custo", "nome": "Custo do m² em SC em 12 meses", "un": "%", "menor_melhor": True, "fonte": "IBGE, SINAPI (SIDRA 2296)", "auto": True},
     {"id": "icst", "pilar": "confianca", "nome": "ICST, confiança da construção", "un": "pts", "menor_melhor": False, "fonte": "FGV IBRE via Ipeadata", "auto": True},
     {"id": "selic", "pilar": "credito", "nome": "Selic", "un": "% a.a.", "menor_melhor": True, "fonte": "Banco Central (SGS 432)", "auto": True},
-    {"id": "sbpe", "pilar": "credito", "nome": "Financiamento SBPE em 12 meses", "un": "%", "menor_melhor": False, "fonte": "Abecip", "auto": False},
+    {"id": "credito", "pilar": "credito", "nome": "Financiamento imobiliário, 12 meses x 12 anteriores", "un": "%", "menor_melhor": False, "fonte": "Banco Central (SGS 20704)", "auto": True},
     {"id": "varejo", "pilar": "atividade", "nome": "Varejo de material de construção", "un": "%", "menor_melhor": False, "fonte": "IBGE, PMC (SIDRA 8883)", "auto": True},
-    {"id": "cimento", "pilar": "atividade", "nome": "Vendas de cimento em 12 meses", "un": "%", "menor_melhor": False, "fonte": "SNIC", "auto": False},
-    {"id": "caged", "pilar": "emprego", "nome": "Caged da construção, saldo em 12 meses", "un": "vagas", "menor_melhor": False, "fonte": "Novo Caged (MTE)", "auto": False},
+    {"id": "insumos", "pilar": "atividade", "nome": "Produção de insumos da construção em 12 meses", "un": "%", "menor_melhor": False, "fonte": "IBGE, PIM-PF (SIDRA 8886)", "auto": True},
+    {"id": "ocupados", "pilar": "emprego", "nome": "Pessoas ocupadas na construção, contra um ano antes", "un": "%", "menor_melhor": False, "fonte": "IBGE, PNAD Contínua (SIDRA 6323)", "auto": True},
 ]
 
+URL_SINAPI_UF = "https://apisidra.ibge.gov.br/values/t/2296/n3/42,43/v/1198/p/all"
+URL_INSUMOS = "https://apisidra.ibge.gov.br/values/t/8886/n1/all/v/11604/p/all"
+URL_OCUPADOS = "https://apisidra.ibge.gov.br/values/t/6323/n1/all/v/8435/p/all/c888/47949"
 URL_VAREJO = "https://apisidra.ibge.gov.br/values/t/8883/n1/all/v/11709/p/all/c11046/56736/c85/2762"
 URL_ICST = "http://www.ipeadata.gov.br/api/odata4/ValoresSerie(SERCODIGO='FGV12_ICSTCA12')"
 URL_SINAPI = "https://apisidra.ibge.gov.br/values/t/2296/n1/all/n3/all/v/48,1198/p/last%201"  # 48 custo do m² (R$), 1198 variação em 12 meses
@@ -93,16 +95,33 @@ def dims_sidra(cab):
         elif "Unidade da Federação" in rot or rot.startswith("Brasil"): d.setdefault("terr", k)
     return d
 
-def mensal_sidra(rows):
+def _mes_sidra(r):
+    """Acha o código de período AAAAMM em qualquer dimensão (mês ou trimestre móvel)."""
+    for k in range(1, 9):
+        c = r.get(f"D{k}C") or ""
+        if len(c) == 6 and c.isdigit() and c[:2] in ("19", "20") and 1 <= int(c[4:]) <= 12:
+            return f"{c[:4]}-{c[4:]}"
+    return None
+
+def mensal_sidra(rows, por=None):
+    """SIDRA -> {'AAAA-MM': valor}. Com por='D1N' devolve {nome do lugar: série}."""
     out = {}
-    if not rows or len(rows) < 2: return out
-    d = dims_sidra(rows[0])
-    for r in rows[1:]:
+    for r in (rows or [])[1:]:
         try: v = float(r["V"])
-        except (ValueError, KeyError): continue
-        c = r.get(f"D{d.get('mes', 0)}C", "")
-        if len(c) == 6: out[f"{c[:4]}-{c[4:]}"] = v
+        except (ValueError, KeyError, TypeError): continue
+        m = _mes_sidra(r)
+        if not m: continue
+        if por: out.setdefault(r.get(por, ""), {})[m] = v
+        else: out[m] = v
+    if por: return {k: dict(sorted(x.items())) for k, x in out.items()}
     return dict(sorted(out.items()))
+
+def var12x12(serie):
+    ks, out = sorted(serie), {}
+    for i in range(23, len(ks)):
+        a = sum(serie[k] for k in ks[i-11:i+1]); b = sum(serie[k] for k in ks[i-23:i-11])
+        if b: out[ks[i]] = round((a / b - 1) * 100, 2)
+    return out
 
 def acum12(var):
     out, ms = {}, sorted(var)
@@ -172,11 +191,17 @@ def calcular(fx=None, manual=None):
         try: return fn()
         except Exception as e:
             avisos.append(f"{nome}: {e}"); print(f"aviso: {nome} falhou: {e}", file=sys.stderr); return padrao
+    uf = tenta("sinapi_uf", lambda: mensal_sidra(fx_or(fx, "sidra_2296_uf.json", URL_SINAPI_UF), por="D1N"), {})
     series = {
         "selic": tenta("selic", lambda: mensal_sgs(sgs(432, fx)), {}),
         "incc": tenta("incc", lambda: acum12(mensal_sgs(sgs(7456, fx))), {}),
+        "sinapi_rs": uf.get("Rio Grande do Sul", {}),
+        "sinapi_sc": uf.get("Santa Catarina", {}),
         "icst": tenta("icst", lambda: mensal_ipea(fx_or(fx, "ipea_icst.json", URL_ICST)), {}),
+        "credito": tenta("credito", lambda: var12x12(mensal_sgs(sgs(20704, fx))), {}),
         "varejo": tenta("varejo", lambda: mensal_sidra(fx_or(fx, "sidra_8883.json", URL_VAREJO)), {}),
+        "insumos": tenta("insumos", lambda: mensal_sidra(fx_or(fx, "sidra_8886.json", URL_INSUMOS)), {}),
+        "ocupados": tenta("ocupados", lambda: mensal_sidra(fx_or(fx, "sidra_6323.json", URL_OCUPADOS)), {}),
     }
     manual = manual or {}
     for i in INDICADORES:
@@ -203,7 +228,7 @@ def montar(series, sinapi=None, avisos=None):
     ref = max((x["mes"] for x in indicadores if x["tem"]), default=None)
     return {
         "gerado_em": datetime.now(timezone.utc).isoformat(timespec="minutes"),
-        "metodologia": "v1.0",
+        "metodologia": "v1.1",
         "termometro": t, "faixa": faixa(t) if t is not None else None, "mes_ref": ref,
         "pilares": pilares, "indicadores": indicadores,
         "historico": hist, "sinapi": sinapi, "avisos": avisos,

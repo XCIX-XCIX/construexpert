@@ -313,11 +313,11 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
 
 <section class="sec light" id="metodo" aria-labelledby="t-met">
   <div class="wrap">
-    <div class="sec-head"><div><p class="rotulo">Metodologia v1.0</p><h2 class="disp" id="t-met">Como o Termômetro é calculado</h2></div></div>
+    <div class="sec-head"><div><p class="rotulo">Metodologia v1.1</p><h2 class="disp" id="t-met">Como o Termômetro é calculado</h2></div></div>
     <div class="metodo">
       <div>
         <h3>A conta</h3>
-        <p>Cada indicador vira uma pontuação de 0 a 100: a leitura do mês comparada ao mínimo e ao máximo dos últimos 60 meses. Onde menor é melhor (INCC, CUB, Selic), a escala se inverte. Cada pilar é a média dos seus indicadores, e o Termômetro soma os pilares pelo peso.</p>
+        <p>Cada indicador vira uma pontuação de 0 a 100: a leitura do mês comparada ao mínimo e ao máximo dos últimos 60 meses. Onde menor é melhor (INCC, custo do m² e Selic), a escala se inverte. Cada pilar é a média dos seus indicadores, e o Termômetro soma os pilares pelo peso.</p>
         <p>Cada indicador entra com a última leitura divulgada, e as datas aparecem ao lado de cada número, porque as fontes saem em dias diferentes. Quando um pilar ainda não tem nenhum dado, ele fica de fora e os pesos dos outros são reescalados para somar 100%.</p>
         <table aria-label="Faixas do semáforo"><thead><tr><th>Faixa</th><th>Termômetro</th><th style="text-align:left">Leitura</th></tr></thead>
           <tbody>
@@ -331,12 +331,13 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
         <div class="tabela-wrap"><table aria-label="Pilares e pesos"><thead><tr><th>Pilar</th><th style="text-align:left">Indicadores</th><th>Peso</th></tr></thead><tbody id="t-pilares"></tbody></table></div>
         <h3 style="margin-top:28px">Fontes</h3>
         <ul class="fontes">
-          <li><a href="https://dadosabertos.bcb.gov.br/" target="_blank" rel="noopener">Banco Central (SGS)</a>: Selic e INCC-M.</li>
+          <li><a href="https://dadosabertos.bcb.gov.br/" target="_blank" rel="noopener">Banco Central (SGS)</a>: Selic, INCC-M e financiamento imobiliário a pessoas físicas.</li>
           <li><a href="http://www.ipeadata.gov.br/" target="_blank" rel="noopener">Ipeadata</a>: Índice de Confiança da Construção (FGV IBRE).</li>
-          <li><a href="https://sidra.ibge.gov.br/" target="_blank" rel="noopener">IBGE · SIDRA</a>: varejo de material de construção (PMC) e SINAPI.</li>
-          <li>Sinduscons, Abecip, SNIC e Novo Caged: lançados à mão uma vez por mês, junto com a edição.</li>
+          <li><a href="https://sidra.ibge.gov.br/" target="_blank" rel="noopener">IBGE · SIDRA</a>: SINAPI, varejo de material de construção (PMC), produção de insumos da construção (PIM-PF) e ocupados na construção (PNAD Contínua).</li>
+          <li>Tudo é buscado automaticamente, todo dia, direto das fontes oficiais.</li>
         </ul>
         <p style="margin-top:12px" id="atualizado"></p>
+        <p>Versão 1.1 (14/11/2026): CUB, SBPE, cimento (SNIC) e Caged, que não têm consulta automática aberta, foram trocados por SINAPI RS e SC, financiamento imobiliário do Banco Central, produção de insumos da construção (IBGE) e ocupados na construção (PNAD).</p>
         <p>O Termômetro é uma leitura analítica do ciclo e não uma recomendação de investimento.</p>
       </div>
     </div>
