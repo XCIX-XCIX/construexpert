@@ -1,6 +1,239 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="utf-8"><title>ConstruExpert</title>
-<meta http-equiv="refresh" content="0; url=termometro/"><link rel="canonical" href="termometro/">
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ConstruExpert · os números da construção e o que fazer com eles</title>
+<meta name="description" content="Termômetro diário da construção civil, Relatório de Mercado mensal e e-books práticos para quem constrói, vende e especifica. Grátis, com dados oficiais do Banco Central, IBGE e FGV.">
+<meta name="theme-color" content="#0B0B0B">
 <link rel="icon" href="marca/icone.svg" type="image/svg+xml">
-<style>body{background:#0B0B0B;color:#fff;font-family:system-ui,sans-serif;padding:40px}a{color:#FF9F1C}</style></head>
-<body><p>Abrindo o <a href="termometro/">Termômetro ConstruExpert</a>…</p></body></html>
+<link rel="icon" href="marca/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="marca/apple-touch-icon.png">
+<link rel="canonical" href="https://xcix-xcix.github.io/construexpert/">
+<meta property="og:site_name" content="ConstruExpert">
+<meta property="og:title" content="ConstruExpert · os números da construção e o que fazer com eles">
+<meta property="og:description" content="Termômetro diário da construção civil, Relatório de Mercado mensal e e-books práticos para quem constrói, vende e especifica. Grátis, com dados oficiais do Banco Central, IBGE e FGV.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://xcix-xcix.github.io/construexpert/">
+<meta property="og:image" content="https://xcix-xcix.github.io/construexpert/marca/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+/* Página inicial: tese + leitura do Termômetro ao vivo, faixa de confiança, três caminhos, produtos, como funciona o acesso grátis. */
+.hero{padding:64px 0 56px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:56px;align-items:center}
+.hero h1{margin-top:14px;font-size:clamp(2.3rem,5vw,3.9rem)}
+.hero .tese{margin-top:20px;color:#d4d4d4;font-size:1.12rem;max-width:32em}
+.hero .acoes{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.hero .como{margin-top:14px;font-size:.86rem;color:var(--texto-fraco)}
+
+.termo{display:block;text-decoration:none;background:var(--superficie);border:1px solid var(--linha);border-radius:14px;padding:26px;transition:border-color .15s}
+.termo:hover{border-color:var(--marca)}
+.termo-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.termo .score{font-family:var(--titulo);font-weight:800;font-size:clamp(3.6rem,7vw,4.8rem);line-height:.9;letter-spacing:-.04em;margin-top:10px}
+.termo .score small{font-size:.32em;color:var(--texto-suave);font-weight:700;letter-spacing:0;margin-left:4px}
+.faixa-chip{font-family:var(--mono);font-size:.78rem;font-weight:600;padding:5px 10px;border-radius:999px;color:#0B0B0B;background:#444}
+.termo .sub{color:var(--texto-suave);font-size:.92rem;margin-top:14px}
+.semaforo{position:relative;display:grid;grid-template-columns:40fr 20fr 40fr;gap:2px;height:12px;border-radius:6px;margin-top:22px}
+.semaforo span:nth-child(1){background:var(--vermelho);border-radius:6px 0 0 6px}
+.semaforo span:nth-child(2){background:var(--amarelo)}
+.semaforo span:nth-child(3){background:var(--verde);border-radius:0 6px 6px 0}
+.semaforo i{position:absolute;top:-8px;width:4px;height:28px;margin-left:-2px;background:#fff;border-radius:2px;box-shadow:0 0 0 2px var(--superficie);left:0;transition:left .4s}
+.termo .ver{display:block;margin-top:20px;font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--marca)}
+
+.faixa-selos{border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);padding:20px 0;background:#000}
+
+.caminhos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.caminho{display:flex;flex-direction:column;gap:10px;text-decoration:none;background:var(--superficie);border:1px solid var(--linha);border-radius:12px;padding:24px;transition:border-color .15s,transform .15s}
+.caminho:hover{border-color:var(--marca);transform:translateY(-2px)}
+.caminho .quem{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-fraco)}
+.caminho b{font-family:var(--titulo);font-weight:800;font-size:1.35rem;letter-spacing:-.02em;line-height:1.15}
+.caminho span{color:var(--texto-suave);font-size:.92rem}
+.caminho em{font-style:normal;font-weight:700;color:var(--marca);margin-top:auto;padding-top:8px;font-size:.9rem}
+
+.produtos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.produto{background:#fff;color:#0B0B0B;border-radius:12px;padding:26px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:start;border:1px solid #e5e0d4}
+.produto .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#B86A00;font-weight:600}
+.produto h3{font-family:var(--titulo);font-weight:800;font-size:1.4rem;letter-spacing:-.02em;margin-top:6px}
+.produto p{color:#3a3a3a;font-size:.92rem;margin-top:8px;max-width:30em}
+.produto a.link-seta{display:inline-block;margin-top:14px;color:#0B0B0B;text-decoration:underline;text-decoration-color:var(--marca);text-decoration-thickness:2px;text-underline-offset:4px}
+.produto .capa{width:96px;border-radius:4px;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.produto .big{font-family:var(--titulo);font-weight:800;font-size:2.6rem;line-height:1;letter-spacing:-.04em;color:#0B0B0B}
+
+.passos{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;counter-reset:p}
+.passos li{counter-increment:p;background:var(--superficie);border:1px solid var(--linha);border-radius:12px;padding:24px}
+.passos li::before{content:"0" counter(p);display:block;font-family:var(--mono);color:var(--marca);font-weight:600;margin-bottom:10px}
+.passos b{display:block;font-size:1.05rem}
+.passos span{color:var(--texto-suave);font-size:.9rem}
+
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .caminhos,.passos{grid-template-columns:1fr}
+  .produtos{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .hero{padding:40px 0}
+  .produto{grid-template-columns:1fr}
+  .produto .capa{display:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="./" aria-label="ConstruExpert, página inicial"><img src="marca/logo-branco.svg" alt="ConstruExpert" width="136" height="38"></a>
+    <nav class="nav" aria-label="Principal"><a href="termometro/">Termômetro</a><a href="relatorio/">Relatório</a><a href="materiais/">Materiais grátis</a><a href="para-marcas/">Para marcas</a></nav>
+    <a class="btn btn-y btn-sm" href="https://chk.eduzz.com/89AXY5GE0D?utm_source=site&amp;utm_medium=inicio&amp;utm_campaign=cta-topo" target="_blank" rel="noopener">Acesso grátis</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mob" aria-label="Abrir menu"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+  <nav class="menu-mob" id="menu-mob" aria-label="Menu"><a href="termometro/">Termômetro</a><a href="relatorio/">Relatório</a><a href="materiais/">Materiais grátis</a><a href="para-marcas/">Para marcas</a><a href="metodologia/">Metodologia</a></nav>
+</header>
+
+<main id="topo">
+<section class="hero" aria-labelledby="t-hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="rotulo">ConstruExpert · dados e formação para a construção civil</p>
+      <h1 class="disp" id="t-hero">Os números da construção e <span class="marca-a">o que fazer com eles</span> na obra.</h1>
+      <p class="tese">Um termômetro do setor atualizado todo dia, um relatório de mercado todo mês e materiais práticos para quem constrói, vende e especifica. Tudo gratuito.</p>
+      <div class="acoes">
+        <a class="btn btn-y" href="https://chk.eduzz.com/89AXY5GE0D?utm_source=site&amp;utm_medium=inicio&amp;utm_campaign=hero" target="_blank" rel="noopener">Criar acesso grátis</a>
+        <a class="btn btn-o" href="termometro/">Ver o Termômetro</a>
+      </div>
+      <p class="como">Cadastro gratuito na escola ConstruExpert, com nome, e-mail e WhatsApp.</p>
+    </div>
+    <a class="termo" href="termometro/" aria-labelledby="t-termo">
+      <div class="termo-top">
+        <div>
+          <p class="rotulo" id="t-termo">Termômetro da construção hoje</p>
+          <div class="score num" id="score">–</div>
+        </div>
+        <span class="faixa-chip" id="faixa">carregando</span>
+      </div>
+      <div class="semaforo" aria-hidden="true"><span></span><span></span><span></span><i id="marcador"></i></div>
+      <p class="sub" id="faixa-sub">Custo, confiança, crédito, atividade e emprego numa nota de 0 a 100.</p>
+      <span class="ver">Ver os cinco pilares →</span>
+    </a>
+  </div>
+</section>
+
+<div class="faixa-selos">
+  <div class="wrap selos">
+    <span>Dados oficiais: <b>Banco Central · IBGE · FGV Ibre</b></span>
+    <span>Atualização automática <b>todo dia</b></span>
+    <span>Conectada à rede <b>Construsul e Construsul BC</b></span>
+  </div>
+</div>
+
+<section class="sec" aria-labelledby="t-cam">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="rotulo">Por onde começar</p><h2 class="disp" id="t-cam">O que você procura?</h2></div></div>
+    <nav class="caminhos" aria-label="Por onde começar">
+      <a class="caminho" href="materiais/"><span class="quem">Pedreiro, mestre, empreiteiro, técnico</span><b>Trabalho em obra</b><span>Seis e-books práticos para orçar, cobrar, conferir o serviço e conseguir mais clientes.</span><em>Ver os e-books grátis →</em></a>
+      <a class="caminho" href="relatorio/"><span class="quem">Construtora, loja, engenheiro, arquiteto</span><b>Acompanho o mercado</b><span>O Relatório de Mercado explica todo dia 15 o que mudou em custo, juros e demanda, e o que fazer com isso.</span><em>Ver o relatório do mês →</em></a>
+      <a class="caminho" href="para-marcas/"><span class="quem">Fabricante, distribuidor, varejo</span><b>Represento uma marca</b><span>Patrocine uma trilha de conteúdo técnico e fale com quem compra e especifica no momento da escolha.</span><em>Conhecer as trilhas →</em></a>
+    </nav>
+  </div>
+</section>
+
+<section class="sec light" aria-labelledby="t-prod">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="rotulo">O que a ConstruExpert entrega</p><h2 class="disp" id="t-prod">Dados para decidir, prática para executar</h2></div></div>
+    <div class="produtos">
+      <article class="produto">
+        <div><p class="tag">Diário · grátis</p><h3>Termômetro ConstruExpert</h3><p>Em que fase está a construção no Brasil: cinco pilares, histórico mês a mês e o custo do m² em cada estado.</p><a class="link-seta" href="termometro/">Abrir o Termômetro</a></div>
+        <div class="big num" id="score-mini">–</div>
+      </article>
+      <article class="produto">
+        <div><p class="tag">Todo dia 15 · grátis com cadastro</p><h3>Relatório de Mercado</h3><p>Custos, juros, atividade e Região Sul em 9 páginas, com uma ação prática para cada público.</p><a class="link-seta" href="relatorio/">Ver a edição de novembro</a></div>
+        <img class="capa" src="relatorio/img/capa-2026-11.jpg" alt="Capa do Relatório de Mercado de novembro de 2026" width="96" height="136" loading="lazy">
+      </article>
+      <article class="produto">
+        <div><p class="tag">6 e-books · grátis</p><h3>Materiais para o canteiro</h3><p>Orçamento, checklists de serviço e de segurança, leitura de planta e como ser encontrado por novos clientes.</p><a class="link-seta" href="materiais/">Baixar os e-books</a></div>
+        <div class="big">6</div>
+      </article>
+      <article class="produto">
+        <div><p class="tag">Lista de espera</p><h3>Minicursos em vídeo</h3><p>Cada e-book vai virar um minicurso curto, com os modelos para usar no dia seguinte. Quem está na lista sabe primeiro e entra com condição de lançamento.</p><a class="link-seta" href="materiais/#minicursos">Entrar na lista</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="t-passos">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="rotulo">Acesso grátis</p><h2 class="disp" id="t-passos">Um cadastro, tudo liberado</h2><p>A escola ConstruExpert fica na Eduzz. O cadastro é gratuito.</p></div></div>
+    <ol class="passos">
+      <li><b>Cadastre-se grátis</b><span>Nome, e-mail e WhatsApp. Leva menos de um minuto.</span></li>
+      <li><b>Baixe o que precisar</b><span>O Relatório de Mercado do mês e os seis e-books ficam na sua área da escola.</span></li>
+      <li><b>Receba as novidades</b><span>Aviso da edição nova todo dia 15 e dos minicursos assim que abrirem.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="cta" aria-labelledby="t-cta">
+  <div class="wrap">
+    <div>
+      <h2 class="disp" id="t-cta">Comece hoje, de graça.</h2>
+      <p>Relatório de Mercado, e-books e aviso dos minicursos num cadastro só.</p>
+    </div>
+    <div class="acoes-cta">
+      <a class="btn btn-k" href="https://chk.eduzz.com/89AXY5GE0D?utm_source=site&amp;utm_medium=inicio&amp;utm_campaign=cta-final" target="_blank" rel="noopener">Criar acesso grátis</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-marca">
+        <img src="marca/logo-branco.svg" alt="ConstruExpert" width="114" height="32" loading="lazy">
+        <p>Dados e formação prática para quem constrói, vende e especifica. Conectada à rede da Construsul e da Construsul BC.</p>
+      </div>
+      <div>
+        <h3>Conteúdo</h3>
+        <ul>
+          <li><a href="termometro/">Termômetro</a></li>
+          <li><a href="relatorio/">Relatório de Mercado</a></li>
+          <li><a href="materiais/">Materiais grátis</a></li>
+          <li><a href="metodologia/">Metodologia</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Fale com a gente</h3>
+        <ul>
+          <li><a href="para-marcas/">Para marcas e patrocínio</a></li>
+          <li><a href="https://wa.me/5551999713119?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20ConstruExpert%20e%20quero%20conhecer%20as%20trilhas%20patrocinadas." target="_blank" rel="noopener">WhatsApp comercial</a></li>
+          <li><a href="https://chat.whatsapp.com/HiWnnU9bLOwJQwbIWMs6zj" target="_blank" rel="noopener">Grupo no WhatsApp</a></li>
+          <li><a href="https://construexpert.substack.com/subscribe?utm_source=site&amp;utm_medium=rodape" target="_blank" rel="noopener">Newsletter no Substack</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 ConstruExpert.</span>
+      <span>Leitura analítica do setor com dados públicos. Não é recomendação de investimento.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/site.js" defer></script>
+<script>
+/* Leitura ao vivo do Termômetro a partir de termometro/dados.json */
+(function(){
+  var F={Vermelho:["#e5534b","Cautela: custo alto, crédito caro ou demanda fraca pesam contra o ciclo."],
+         Amarelo:["#FFC400","Atenção: sinais mistos, sem direção clara."],
+         Verde:["#3fb950","Expansão: confiança, crédito e demanda sustentam o ciclo."]};
+  fetch("termometro/dados.json",{cache:"no-store"}).then(function(r){return r.json();}).then(function(D){
+    var t=D.termometro, f=D.faixa||(t<40?"Vermelho":t<60?"Amarelo":"Verde"), c=F[f]||F.Amarelo;
+    document.getElementById("score").innerHTML=Math.round(t)+"<small>/100</small>";
+    document.getElementById("score-mini").textContent=Math.round(t);
+    var chip=document.getElementById("faixa"); chip.textContent=f; chip.style.background=c[0];
+    document.getElementById("faixa-sub").textContent=c[1];
+    document.getElementById("marcador").style.left=Math.max(0,Math.min(100,t))+"%";
+  }).catch(function(){ document.getElementById("faixa").textContent="ver página"; });
+})();
+</script>
+</body>
+</html>

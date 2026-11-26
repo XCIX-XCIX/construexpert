@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
 <style>
 :root{
   /* Mesma identidade do Termômetro: preto, laranja #FF9F1C e branco; títulos em Outfit. Layout: capa do PDF ao lado da tese, destaques, o que tem dentro com prévia esmaecida, faixa de cadastro. */
@@ -62,13 +63,6 @@ img{max-width:100%}
 .btn-line:hover{background:rgba(0,0,0,.08)}
 .btn-sm{min-height:40px;padding:0 14px;font-size:.76rem}
 
-.top{position:sticky;top:0;z-index:30;background:rgba(11,11,11,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--linha)}
-.top .wrap{display:flex;align-items:center;gap:28px;height:64px}
-.logo{display:flex;align-items:center;text-decoration:none;flex:none}
-.logo img{display:block;height:38px;width:auto}
-.nav{display:flex;gap:24px;margin-left:auto}
-.nav a{font-weight:600;font-size:.9rem;text-decoration:none;color:var(--texto-suave)}
-.nav a:hover,.nav a[aria-current]{color:#fff}
 
 .hero{padding:56px 0 56px;border-bottom:1px solid var(--linha)}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:56px;align-items:center}
@@ -108,11 +102,6 @@ img{max-width:100%}
 .previa-nota{grid-column:1 / -1;font-size:.88rem;color:#444}
 .previa-nota a{color:#0B0B0B;font-weight:700;text-decoration-color:var(--marca);text-decoration-thickness:2px;text-underline-offset:3px}
 
-.cta{background:var(--marca);color:#0B0B0B;padding:52px 0}
-.cta .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
-.cta h2{font-size:clamp(1.6rem,3vw,2.3rem);max-width:17em}
-.cta p{margin-top:8px;color:#2a2a2a;max-width:36em}
-.cta .acoes-cta{display:flex;gap:10px;flex-wrap:wrap}
 
 .duas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
 .edicoes{border-top:1px solid var(--linha)}
@@ -127,14 +116,8 @@ img{max-width:100%}
 .marca-box p{color:var(--texto-suave);max-width:30em}
 .marca-box b{color:#fff;display:block}
 
-.foot{padding:28px 0;color:var(--texto-fraco);font-size:.84rem}
-.foot .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.foot-marca{display:flex;align-items:center;gap:14px}
-.foot-marca img{display:block;height:30px;width:auto}
 
 @media (max-width:960px){
-  .nav{display:none}
-  .top .btn{margin-left:auto}
   .hero-grid,.dentro-grid,.duas{grid-template-columns:1fr}
   .capa{max-width:340px}
   .destaques{grid-template-columns:1fr}
@@ -151,12 +134,12 @@ img{max-width:100%}
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="../termometro/"><img src="../marca/logo-branco.svg" alt="ConstruExpert" width="136" height="38"></a>
-    <nav class="nav" aria-label="Seções do site">
-      <a href="../termometro/">Termômetro</a><a href="./" aria-current="page">Relatório de Mercado</a><a href="../termometro/#materiais">Materiais grátis</a><a href="../termometro/#marcas">Para marcas</a>
-    </nav>
-    <a class="btn btn-y btn-sm" href="#receber">Receber o relatório</a>
+    <a class="logo" href="../" aria-label="ConstruExpert, página inicial"><img src="../marca/logo-branco.svg" alt="ConstruExpert" width="136" height="38"></a>
+    <nav class="nav" aria-label="Principal"><a href="../termometro/">Termômetro</a><a href="../relatorio/" aria-current="page">Relatório</a><a href="../materiais/">Materiais grátis</a><a href="../para-marcas/">Para marcas</a></nav>
+    <a class="btn btn-y btn-sm" href="https://chk.eduzz.com/89AXY5GE0D?utm_source=site&amp;utm_medium=relatorio&amp;utm_campaign=cta-topo" target="_blank" rel="noopener">Acesso grátis</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mob" aria-label="Abrir menu"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   </div>
+  <nav class="menu-mob" id="menu-mob" aria-label="Menu"><a href="../termometro/">Termômetro</a><a href="../relatorio/" aria-current="page">Relatório</a><a href="../materiais/">Materiais grátis</a><a href="../para-marcas/">Para marcas</a><a href="../metodologia/">Metodologia</a></nav>
 </header>
 
 <main id="topo">
@@ -261,9 +244,36 @@ img{max-width:100%}
 
 <footer class="foot">
   <div class="wrap">
-    <span class="foot-marca"><img src="../marca/logo-branco.svg" alt="ConstruExpert" width="107" height="30" loading="lazy"><span>© 2026 ConstruExpert. Especialização prática para profissionais da construção.</span></span>
-    <span>Leitura analítica do setor. Não é recomendação de investimento.</span>
+    <div class="foot-grid">
+      <div class="foot-marca">
+        <img src="../marca/logo-branco.svg" alt="ConstruExpert" width="114" height="32" loading="lazy">
+        <p>Dados e formação prática para quem constrói, vende e especifica. Conectada à rede da Construsul e da Construsul BC.</p>
+      </div>
+      <div>
+        <h3>Conteúdo</h3>
+        <ul>
+          <li><a href="../termometro/">Termômetro</a></li>
+          <li><a href="../relatorio/">Relatório de Mercado</a></li>
+          <li><a href="../materiais/">Materiais grátis</a></li>
+          <li><a href="../metodologia/">Metodologia</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Fale com a gente</h3>
+        <ul>
+          <li><a href="../para-marcas/">Para marcas e patrocínio</a></li>
+          <li><a href="https://wa.me/5551999713119?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20ConstruExpert%20e%20quero%20conhecer%20as%20trilhas%20patrocinadas." target="_blank" rel="noopener">WhatsApp comercial</a></li>
+          <li><a href="https://chat.whatsapp.com/HiWnnU9bLOwJQwbIWMs6zj" target="_blank" rel="noopener">Grupo no WhatsApp</a></li>
+          <li><a href="https://construexpert.substack.com/subscribe?utm_source=site&amp;utm_medium=rodape" target="_blank" rel="noopener">Newsletter no Substack</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 ConstruExpert.</span>
+      <span>Leitura analítica do setor com dados públicos. Não é recomendação de investimento.</span>
+    </div>
   </div>
 </footer>
+<script src="../assets/site.js" defer></script>
 </body>
 </html>

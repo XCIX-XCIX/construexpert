@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metodologia do Termômetro ConstruExpert</title>
+<meta name="description" content="Como o Termômetro ConstruExpert é calculado: cinco pilares com peso, cada indicador comparado aos últimos 60 meses, fontes oficiais do Banco Central, IBGE e FGV.">
+<meta name="theme-color" content="#0B0B0B">
+<link rel="icon" href="../marca/icone.svg" type="image/svg+xml">
+<link rel="icon" href="../marca/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../marca/apple-touch-icon.png">
+<link rel="canonical" href="https://xcix-xcix.github.io/construexpert/metodologia/">
+<meta property="og:site_name" content="ConstruExpert">
+<meta property="og:title" content="Metodologia do Termômetro ConstruExpert">
+<meta property="og:description" content="Como o Termômetro ConstruExpert é calculado: cinco pilares com peso, cada indicador comparado aos últimos 60 meses, fontes oficiais do Banco Central, IBGE e FGV.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://xcix-xcix.github.io/construexpert/metodologia/">
+<meta property="og:image" content="https://xcix-xcix.github.io/construexpert/marca/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+.hero{padding:56px 0 40px;border-bottom:1px solid var(--linha)}
+.hero h1{margin-top:14px;font-size:clamp(2.1rem,4.4vw,3.2rem)}
+.hero .tese{margin-top:16px;color:#d4d4d4;font-size:1.05rem;max-width:40em}
+.metodo{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.metodo h3{font-weight:800;font-size:1.2rem;margin-bottom:10px;letter-spacing:-.01em}
+.metodo p{color:#3a3a3a;margin-bottom:12px;max-width:36em}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{text-align:right;padding:7px 8px;border-bottom:1px solid #ddd8cc;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#555}
+.zchip{display:inline-flex;align-items:center;gap:8px;font-weight:600}
+.zchip i{width:10px;height:10px;border-radius:50%}
+.fontes{margin-top:8px;padding-left:18px;color:#3a3a3a;font-size:.92rem}
+.fontes li{margin-bottom:6px}
+.light a{color:#0B0B0B;font-weight:700;text-decoration-color:var(--marca);text-decoration-thickness:2px;text-underline-offset:3px}
+.tabela-wrap{overflow-x:auto}
+@media (max-width:960px){.metodo{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../" aria-label="ConstruExpert, página inicial"><img src="../marca/logo-branco.svg" alt="ConstruExpert" width="136" height="38"></a>
+    <nav class="nav" aria-label="Principal"><a href="../termometro/">Termômetro</a><a href="../relatorio/">Relatório</a><a href="../materiais/">Materiais grátis</a><a href="../para-marcas/">Para marcas</a></nav>
+    <a class="btn btn-y btn-sm" href="https://chk.eduzz.com/89AXY5GE0D?utm_source=site&amp;utm_medium=metodologia&amp;utm_campaign=cta-topo" target="_blank" rel="noopener">Acesso grátis</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mob" aria-label="Abrir menu"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+  <nav class="menu-mob" id="menu-mob" aria-label="Menu"><a href="../termometro/">Termômetro</a><a href="../relatorio/">Relatório</a><a href="../materiais/">Materiais grátis</a><a href="../para-marcas/">Para marcas</a><a href="../metodologia/" aria-current="page">Metodologia</a></nav>
+</header>
+
+<main id="topo">
+<section class="hero" aria-labelledby="t-hero">
+  <div class="wrap">
+    <p class="rotulo">Metodologia v1.1 · <a class="link-seta" href="../termometro/">voltar ao Termômetro</a></p>
+    <h1 class="disp" id="t-hero">Como o Termômetro é calculado</h1>
+    <p class="tese">Uma nota de 0 a 100, feita só com dados oficiais e públicos, buscados automaticamente todo dia. Abaixo, a conta, os pesos e as fontes.</p>
+  </div>
+</section>
+
+<section class="sec light" aria-label="Metodologia">
+  <div class="wrap">
+    <div class="metodo">
+      <div>
+        <h3>A conta</h3>
+        <p>Cada indicador vira uma pontuação de 0 a 100: a leitura do mês comparada ao mínimo e ao máximo dos últimos 60 meses. Zero é a pior leitura dos últimos cinco anos e 100, a melhor. Onde menor é melhor (INCC, custo do m² e Selic), a escala se inverte. Cada pilar é a média dos seus indicadores, e o Termômetro soma os pilares pelo peso.</p>
+        <p>Cada indicador entra com a última leitura divulgada, e as datas aparecem ao lado de cada número, porque as fontes saem em dias diferentes. Quando um pilar ainda não tem nenhum dado, ele fica de fora e os pesos dos outros são reescalados para somar 100%.</p>
+        <table aria-label="Faixas do semáforo"><thead><tr><th>Faixa</th><th>Termômetro</th><th style="text-align:left">Leitura</th></tr></thead>
+          <tbody>
+            <tr><td><span class="zchip"><i style="background:#e5534b"></i>Vermelho</span></td><td>0 a 39</td><td style="text-align:left;white-space:normal">Cautela: custo alto, crédito caro ou demanda fraca pesam contra o ciclo</td></tr>
+            <tr><td><span class="zchip"><i style="background:#FFC400"></i>Amarelo</span></td><td>40 a 59</td><td style="text-align:left;white-space:normal">Atenção: sinais mistos, sem direção clara</td></tr>
+            <tr><td><span class="zchip"><i style="background:#3fb950"></i>Verde</span></td><td>60 a 100</td><td style="text-align:left;white-space:normal">Expansão: confiança, crédito e demanda sustentam o ciclo</td></tr>
+          </tbody></table>
+      </div>
+      <div>
+        <h3>Pilares, indicadores e pesos</h3>
+        <div class="tabela-wrap"><table aria-label="Pilares e pesos"><thead><tr><th>Pilar</th><th style="text-align:left">Indicadores</th><th>Peso</th></tr></thead><tbody id="t-pilares"></tbody></table></div>
+        <h3 style="margin-top:28px">Fontes</h3>
+        <ul class="fontes">
+          <li><a href="https://dadosabertos.bcb.gov.br/" target="_blank" rel="noopener">Banco Central (SGS)</a>: Selic, INCC-M e financiamento imobiliário a pessoas físicas.</li>
+          <li><a href="http://www.ipeadata.gov.br/" target="_blank" rel="noopener">Ipeadata</a>: Índice de Confiança da Construção (FGV IBRE).</li>
+          <li><a href="https://sidra.ibge.gov.br/" target="_blank" rel="noopener">IBGE · SIDRA</a>: SINAPI, varejo de material de construção (PMC), produção de insumos da construção (PIM-PF) e ocupados na construção (PNAD Contínua).</li>
+          <li>Tudo é buscado automaticamente, todo dia, direto das fontes oficiais.</li>
+        </ul>
+        <p style="margin-top:12px" id="atualizado"></p>
+        <p>Versão 1.1 (14/11/2026): CUB, SBPE, cimento (SNIC) e Caged, que não têm consulta automática aberta, foram trocados por SINAPI RS e SC, financiamento imobiliário do Banco Central, produção de insumos da construção (IBGE) e ocupados na construção (PNAD).</p>
+        <p>O Termômetro é uma leitura analítica do ciclo e não uma recomendação de investimento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-marca">
+        <img src="../marca/logo-branco.svg" alt="ConstruExpert" width="114" height="32" loading="lazy">
+        <p>Dados e formação prática para quem constrói, vende e especifica. Conectada à rede da Construsul e da Construsul BC.</p>
+      </div>
+      <div>
+        <h3>Conteúdo</h3>
+        <ul>
+          <li><a href="../termometro/">Termômetro</a></li>
+          <li><a href="../relatorio/">Relatório de Mercado</a></li>
+          <li><a href="../materiais/">Materiais grátis</a></li>
+          <li><a href="../metodologia/">Metodologia</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Fale com a gente</h3>
+        <ul>
+          <li><a href="../para-marcas/">Para marcas e patrocínio</a></li>
+          <li><a href="https://wa.me/5551999713119?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20ConstruExpert%20e%20quero%20conhecer%20as%20trilhas%20patrocinadas." target="_blank" rel="noopener">WhatsApp comercial</a></li>
+          <li><a href="https://chat.whatsapp.com/HiWnnU9bLOwJQwbIWMs6zj" target="_blank" rel="noopener">Grupo no WhatsApp</a></li>
+          <li><a href="https://construexpert.substack.com/subscribe?utm_source=site&amp;utm_medium=rodape" target="_blank" rel="noopener">Newsletter no Substack</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 ConstruExpert.</span>
+      <span>Leitura analítica do setor com dados públicos. Não é recomendação de investimento.</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+<script>
+fetch("../termometro/dados.json",{cache:"no-store"}).then(function(r){return r.json();}).then(function(D){
+  document.getElementById("t-pilares").innerHTML=D.pilares.map(function(p){
+    var its=D.indicadores.filter(function(i){return i.pilar===p.id;}).map(function(i){return i.nome+(i.menor_melhor?" (menor é melhor)":"");}).join("; ");
+    return '<tr><td><b>'+p.nome+'</b></td><td style="text-align:left;white-space:normal">'+its+'</td><td>'+p.peso+'%</td></tr>';
+  }).join("");
+  document.getElementById("atualizado").textContent="Dados atualizados em "+new Date(D.gerado_em).toLocaleDateString("pt-BR")+".";
+}).catch(function(){});
+</script>
+</body>
+</html>

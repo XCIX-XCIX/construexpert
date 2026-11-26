@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Termômetro ConstruExpert</title>
-<meta name="description" content="Em que fase está a construção civil no Brasil? Custo, confiança, crédito, atividade e emprego numa nota de 0 a 100, atualizada todo dia, com o custo do m² em cada estado.">
+<title>Termômetro ConstruExpert · em que fase está a construção</title>
+<meta name="description" content="Em que fase está a construção civil no Brasil? Custo, confiança, crédito, atividade e emprego numa nota de 0 a 100, atualizada todo dia com dados do Banco Central, IBGE e FGV, e o custo do m² em cada estado.">
 <meta name="theme-color" content="#0B0B0B">
 <link rel="icon" href="../marca/icone.svg" type="image/svg+xml">
 <link rel="icon" href="../marca/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../marca/apple-touch-icon.png">
+<link rel="canonical" href="https://xcix-xcix.github.io/construexpert/termometro/">
 <meta property="og:site_name" content="ConstruExpert">
-<meta property="og:title" content="Termômetro ConstruExpert">
-<meta property="og:description" content="Em que fase está a construção civil no Brasil? Uma nota de 0 a 100, atualizada todo dia.">
+<meta property="og:title" content="Termômetro ConstruExpert · em que fase está a construção">
+<meta property="og:description" content="Em que fase está a construção civil no Brasil? Custo, confiança, crédito, atividade e emprego numa nota de 0 a 100, atualizada todo dia com dados do Banco Central, IBGE e FGV, e o custo do m² em cada estado.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://xcix-xcix.github.io/construexpert/termometro/">
 <meta property="og:image" content="https://xcix-xcix.github.io/construexpert/marca/og-image.png">
@@ -19,6 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
 <style>
 :root{
   /* Identidade ConstruExpert (logo do Canva): preto, laranja #FF9F1C e branco; títulos em Outfit, parente gratuita da Garet do logo. Layout: leitura rápida no topo, indicadores, histórico, custo por estado, metodologia em faixa clara. */
@@ -61,15 +63,6 @@ h1,h2,h3,p{margin:0}
 .btn-k:hover{background:#262626}
 .btn-sm{min-height:40px;padding:0 14px;font-size:.76rem}
 
-.top{position:sticky;top:0;z-index:30;background:rgba(11,11,11,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--linha)}
-.top .wrap{display:flex;align-items:center;gap:28px;height:64px}
-.logo{display:flex;align-items:center;text-decoration:none;flex:none}
-.logo img{display:block;height:38px;width:auto}
-.foot-marca{display:flex;align-items:center;gap:14px}
-.foot-marca img{display:block;height:30px;width:auto}
-.nav{display:flex;gap:24px;margin-left:auto}
-.nav a{font-weight:600;font-size:.9rem;text-decoration:none;color:var(--texto-suave)}
-.nav a:hover,.nav a[aria-current]{color:#fff}
 
 .hero{padding:48px 0 40px;border-bottom:1px solid var(--linha)}
 .hero h1{margin-top:12px;font-size:clamp(2.1rem,4.6vw,3.4rem);max-width:15em}
@@ -182,14 +175,10 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
 .cta .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
 .cta h2{font-size:clamp(1.5rem,3vw,2.1rem);max-width:19em}
 .cta p{margin-top:8px;color:#2a2a2a}
-.foot{padding:28px 0;color:var(--texto-fraco);font-size:.84rem}
-.foot .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 
 @media (max-width:960px){
   .hero-grid,.metodo{grid-template-columns:1fr}
   .ufs{grid-template-columns:1fr}
-  .nav{display:none}
-  .top .btn{margin-left:auto}
 }
 @media (max-width:420px){
   .wrap{padding:0 16px}
@@ -278,17 +267,23 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
   .caminhos,.ebooks,.trilhas{grid-template-columns:1fr}
   .btn{white-space:normal;text-align:center}
 }
+.hero-tese{margin-top:14px;color:#d4d4d4;font-size:1.05rem;max-width:38em}
+.hero-selos{margin-top:26px}
+.pil-nota{font-family:var(--mono);font-size:.68rem;color:var(--texto-fraco);border-top:1px solid var(--linha);padding-top:10px}
+.ponte{background:var(--superficie);border:1px solid var(--linha);border-left:4px solid var(--marca);border-radius:12px;padding:28px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.ponte h2{font-size:clamp(1.4rem,2.6vw,1.9rem);max-width:22em}
+.ponte p{color:var(--texto-suave);margin-top:8px;max-width:40em}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#topo"><img src="../marca/logo-branco.svg" alt="ConstruExpert" width="136" height="38"></a>
-    <nav class="nav" aria-label="Seções">
-      <a href="#topo" aria-current="page">Termômetro</a><a href="../relatorio/">Relatório</a><a href="#pilares">Pilares</a><a href="#estados">Custo por estado</a><a href="#materiais">Materiais grátis</a><a href="#minicursos">Minicursos</a><a href="#marcas">Para marcas</a>
-    </nav>
-    <a class="btn btn-y btn-sm" href="https://construexpert.substack.com/subscribe?utm_source=site&amp;utm_medium=termometro&amp;utm_campaign=cta-topo" target="_blank" rel="noopener">Receber os indicadores</a>
+    <a class="logo" href="../" aria-label="ConstruExpert, página inicial"><img src="../marca/logo-branco.svg" alt="ConstruExpert" width="136" height="38"></a>
+    <nav class="nav" aria-label="Principal"><a href="../termometro/" aria-current="page">Termômetro</a><a href="../relatorio/">Relatório</a><a href="../materiais/">Materiais grátis</a><a href="../para-marcas/">Para marcas</a></nav>
+    <a class="btn btn-y btn-sm" href="https://chk.eduzz.com/89AXY5GE0D?utm_source=site&amp;utm_medium=termometro&amp;utm_campaign=cta-topo" target="_blank" rel="noopener">Acesso grátis</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mob" aria-label="Abrir menu"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   </div>
+  <nav class="menu-mob" id="menu-mob" aria-label="Menu"><a href="../termometro/" aria-current="page">Termômetro</a><a href="../relatorio/">Relatório</a><a href="../materiais/">Materiais grátis</a><a href="../para-marcas/">Para marcas</a><a href="../metodologia/">Metodologia</a></nav>
 </header>
 
 <main id="topo">
@@ -296,6 +291,7 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
   <div class="wrap">
     <p class="rotulo">Termômetro ConstruExpert · o ciclo da construção civil</p>
     <h1 class="disp" id="t-hero">Em que fase está a <span class="marca-a">construção no Brasil?</span></h1>
+    <p class="hero-tese">Uma nota de 0 a 100 que junta custo, confiança, crédito, atividade e emprego. Dados oficiais, atualizados automaticamente todo dia.</p>
     <div class="hero-grid">
       <div class="leitura" aria-live="polite">
         <div class="leitura-top">
@@ -317,11 +313,10 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
       </div>
       <div class="pil-lista" id="pil-lista" aria-label="Pontuação dos pilares"></div>
     </div>
-    <nav class="caminhos" aria-label="Por onde começar">
-      <a class="caminho" href="#materiais"><b>Trabalho em obra</b><span>Pedreiro, mestre, empreiteiro, técnico ou engenheiro: 6 e-books práticos para orçar, cobrar e trabalhar melhor.</span><em>Baixar grátis ↓</em></a>
-      <a class="caminho" href="#minicursos"><b>Quero aprender mais</b><span>Cada e-book vai virar um minicurso em vídeo. Entre na lista e seja avisado primeiro.</span><em>Entrar na lista ↓</em></a>
-      <a class="caminho" href="#marcas"><b>Represento uma marca</b><span>Fabricantes, distribuidores e lojas: patrocine uma trilha de conteúdo técnico para quem compra e especifica.</span><em>Ver as trilhas ↓</em></a>
-    </nav>
+    <div class="selos hero-selos">
+      <span>Fontes: <b>Banco Central · IBGE · FGV Ibre</b></span>
+      <span><a class="link-seta" href="../metodologia/">Como a nota é calculada →</a></span>
+    </div>
   </div>
 </section>
 
@@ -375,116 +370,29 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
   </div>
 </section>
 
-<section class="sec" id="materiais" aria-labelledby="t-mat">
+<section class="sec" id="relatorio" aria-labelledby="t-rel">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="ponte">
       <div>
-        <p class="rotulo">Materiais gratuitos · ConstruExpert</p>
-        <h2 class="disp" id="t-mat">Os dados mostram o cenário. A próxima decisão é sua.</h2>
-        <p>Seis e-books curtos, feitos para usar no canteiro e no celular. Baixe, imprima e passe para a equipe.</p>
+        <p class="rotulo">Relatório de Mercado · todo dia 15</p>
+        <h2 class="disp" id="t-rel">O número diz em que fase estamos. O relatório explica o porquê.</h2>
+        <p>Custos, juros, atividade e Região Sul em 9 páginas, com uma ação prática para construtoras, empreiteiros, lojistas e projetistas.</p>
       </div>
+      <a class="btn btn-y" href="../relatorio/">Ver a edição do mês</a>
     </div>
-    <div class="ebooks">
-      <article class="ebook"><p class="n">E-book 01</p><h3>Como orçar e cobrar o serviço</h3><p>Diária, empreitada e material: como chegar a um preço justo, explicar para o cliente e receber sem discussão.</p><a class="btn btn-k" href="../materiais/como-orcar-e-cobrar-o-servico.pdf" target="_blank" rel="noopener" data-ebook="orcar-cobrar">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
-      <article class="ebook"><p class="n">E-book 02</p><h3>7 erros que fazem o profissional perder dinheiro</h3><p>Onde a diária escapa, quanto custa cada furo e o que fazer no lugar.</p><a class="btn btn-k" href="../materiais/7-erros-que-fazem-o-profissional-perder-dinheiro.pdf" target="_blank" rel="noopener" data-ebook="7-erros">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
-      <article class="ebook"><p class="n">E-book 03</p><h3>Checklist antes de começar o serviço</h3><p>Conferência de frente, medida, material e base: meia hora aqui evita um dia perdido.</p><a class="btn btn-k" href="../materiais/checklist-antes-de-comecar-o-servico.pdf" target="_blank" rel="noopener" data-ebook="checklist-servico">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
-      <article class="ebook"><p class="n">E-book 04</p><h3>Checklist de segurança básica no canteiro</h3><p>Conferência de início de dia para quem executa: se o item não passa, o serviço não começa.</p><a class="btn btn-k" href="../materiais/checklist-de-seguranca-basica-no-canteiro.pdf" target="_blank" rel="noopener" data-ebook="seguranca">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
-      <article class="ebook"><p class="n">E-book 05</p><h3>Como ler planta e projeto no canteiro</h3><p>O que olhar, em que ordem e como conferir o papel com a obra antes de iniciar.</p><a class="btn btn-k" href="../materiais/como-ler-planta-e-projeto-no-canteiro.pdf" target="_blank" rel="noopener" data-ebook="planta">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
-      <article class="ebook"><p class="n">E-book 06</p><h3>Como ser encontrado</h3><p>Portfólio, WhatsApp e indicação: como transformar serviço bem feito em novos clientes.</p><a class="btn btn-k" href="../materiais/como-ser-encontrado.pdf" target="_blank" rel="noopener" data-ebook="ser-encontrado">Baixar grátis (PDF)</a><p class="curso">Vira minicurso em breve</p></article>
-    </div>
-    <p class="nota-isca">Gostou do material? <a href="https://construexpert.substack.com/subscribe?utm_source=site&amp;utm_medium=termometro&amp;utm_campaign=ebooks" target="_blank" rel="noopener">Assine a newsletter</a> e receba os próximos, junto com o <a href="../relatorio/">Relatório de Mercado</a> de todo dia 15.</p>
-  </div>
-</section>
-
-<section class="sec" id="minicursos" aria-labelledby="t-cur">
-  <div class="wrap">
-    <div class="faixa-cursos">
-      <div>
-        <p class="rotulo">Minicursos ConstruExpert · em produção</p>
-        <h3 id="t-cur">Os seis e-books vão virar minicursos em vídeo.</h3>
-        <p>Aulas curtas e práticas, com os modelos para usar no dia seguinte. Quem estiver na lista fica sabendo primeiro e entra com condição de lançamento.</p>
-      </div>
-      <a class="btn btn-y" href="https://chat.whatsapp.com/HiWnnU9bLOwJQwbIWMs6zj" target="_blank" rel="noopener">Entrar na lista pelo WhatsApp</a>
-    </div>
-  </div>
-</section>
-
-<section class="sec marcas" id="marcas" aria-labelledby="t-mar">
-  <div class="wrap marcas-grid">
-    <div>
-      <p class="rotulo">Para fabricantes, distribuidores e lojas</p>
-      <h2 class="disp" id="t-mar">Sua marca ensinando <span class="marca-a">quem compra e especifica.</span></h2>
-      <p class="lead">A ConstruExpert organiza o conteúdo em trilhas técnicas. Cada trilha pode ter uma marca parceira, presente nas aulas, nos materiais e na newsletter, falando com profissionais no momento em que eles escolhem o que usar na obra.</p>
-      <ul class="marcas-pontos">
-        <li>Conteúdo técnico com a sua solução aplicada em casos reais de obra</li>
-        <li>Presença nos e-books, minicursos, newsletter e no Relatório de Mercado mensal</li>
-        <li>Ligação direta com a rede da Construsul e da Construsul BC</li>
-        <li>Cotas de parceiro fundador para as primeiras marcas de cada trilha</li>
-      </ul>
-      <a class="btn btn-wa" href="https://wa.me/5551999713119?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20ConstruExpert%20e%20quero%20conhecer%20as%20trilhas%20patrocinadas." target="_blank" rel="noopener" data-cta="b2b-whatsapp">Quero conhecer as cotas pelo WhatsApp</a>
-    </div>
-    <div>
-      <p class="rotulo" style="margin-bottom:12px">As 12 trilhas</p>
-      <div class="trilhas">
-        <div><b>01</b>Equipamentos, ferramentas e produtividade</div>
-        <div><b>02</b>Estruturas, concreto e sistemas construtivos</div>
-        <div><b>03</b>Pintura, revestimentos e acabamentos</div>
-        <div><b>04</b>Hidráulica, água e saneamento</div>
-        <div><b>05</b>Elétrica, energia e automação</div>
-        <div><b>06</b>Impermeabilização, vedação e durabilidade</div>
-        <div><b>07</b>Segurança e trabalho em altura</div>
-        <div><b>08</b>Gestão e tecnologia na construção</div>
-        <div><b>09</b>Conforto térmico, acústico e eficiência</div>
-        <div><b>10</b>Esquadrias, portas e envoltória</div>
-        <div><b>11</b>Construção sustentável e novas soluções</div>
-        <div><b>12</b>Gestão e venda técnica no varejo</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec light" id="metodo" aria-labelledby="t-met">
-  <div class="wrap">
-    <div class="sec-head"><div><p class="rotulo">Metodologia v1.1</p><h2 class="disp" id="t-met">Como o Termômetro é calculado</h2></div></div>
-    <div class="metodo">
-      <div>
-        <h3>A conta</h3>
-        <p>Cada indicador vira uma pontuação de 0 a 100: a leitura do mês comparada ao mínimo e ao máximo dos últimos 60 meses. Onde menor é melhor (INCC, custo do m² e Selic), a escala se inverte. Cada pilar é a média dos seus indicadores, e o Termômetro soma os pilares pelo peso.</p>
-        <p>Cada indicador entra com a última leitura divulgada, e as datas aparecem ao lado de cada número, porque as fontes saem em dias diferentes. Quando um pilar ainda não tem nenhum dado, ele fica de fora e os pesos dos outros são reescalados para somar 100%.</p>
-        <table aria-label="Faixas do semáforo"><thead><tr><th>Faixa</th><th>Termômetro</th><th style="text-align:left">Leitura</th></tr></thead>
-          <tbody>
-            <tr><td><span class="zchip"><i style="background:#e5534b"></i>Vermelho</span></td><td>0 a 39</td><td style="text-align:left;white-space:normal">Cautela: custo alto, crédito caro ou demanda fraca pesam contra o ciclo</td></tr>
-            <tr><td><span class="zchip"><i style="background:#FFC400"></i>Amarelo</span></td><td>40 a 59</td><td style="text-align:left;white-space:normal">Atenção: sinais mistos, sem direção clara</td></tr>
-            <tr><td><span class="zchip"><i style="background:#3fb950"></i>Verde</span></td><td>60 a 100</td><td style="text-align:left;white-space:normal">Expansão: confiança, crédito e demanda sustentam o ciclo</td></tr>
-          </tbody></table>
-      </div>
-      <div>
-        <h3>Pilares, indicadores e pesos</h3>
-        <div class="tabela-wrap"><table aria-label="Pilares e pesos"><thead><tr><th>Pilar</th><th style="text-align:left">Indicadores</th><th>Peso</th></tr></thead><tbody id="t-pilares"></tbody></table></div>
-        <h3 style="margin-top:28px">Fontes</h3>
-        <ul class="fontes">
-          <li><a href="https://dadosabertos.bcb.gov.br/" target="_blank" rel="noopener">Banco Central (SGS)</a>: Selic, INCC-M e financiamento imobiliário a pessoas físicas.</li>
-          <li><a href="http://www.ipeadata.gov.br/" target="_blank" rel="noopener">Ipeadata</a>: Índice de Confiança da Construção (FGV IBRE).</li>
-          <li><a href="https://sidra.ibge.gov.br/" target="_blank" rel="noopener">IBGE · SIDRA</a>: SINAPI, varejo de material de construção (PMC), produção de insumos da construção (PIM-PF) e ocupados na construção (PNAD Contínua).</li>
-          <li>Tudo é buscado automaticamente, todo dia, direto das fontes oficiais.</li>
-        </ul>
-        <p style="margin-top:12px" id="atualizado"></p>
-        <p>Versão 1.1 (14/11/2026): CUB, SBPE, cimento (SNIC) e Caged, que não têm consulta automática aberta, foram trocados por SINAPI RS e SC, financiamento imobiliário do Banco Central, produção de insumos da construção (IBGE) e ocupados na construção (PNAD).</p>
-        <p>O Termômetro é uma leitura analítica do ciclo e não uma recomendação de investimento.</p>
-      </div>
-    </div>
+    <p class="nota-rodape" id="atualizado"></p>
   </div>
 </section>
 
 <section class="cta" aria-labelledby="t-cta">
   <div class="wrap">
     <div>
-      <h2 class="disp" id="t-cta">O Termômetro explicado, todo dia 15, no seu e-mail.</h2>
-      <p>A edição mensal mostra o que mexeu no número e o que fazer com isso na obra, na loja e no projeto.</p>
+      <h2 class="disp" id="t-cta">Receba o Termômetro explicado, todo dia 15.</h2>
+      <p>Cadastro gratuito na escola ConstruExpert: Relatório de Mercado, seis e-books práticos e o aviso dos minicursos.</p>
     </div>
     <div class="acoes-cta">
-      <a class="btn btn-k" href="https://construexpert.substack.com/subscribe?utm_source=site&amp;utm_medium=termometro&amp;utm_campaign=cta-final" target="_blank" rel="noopener">Quero receber os indicadores</a>
-      <a class="btn btn-line" href="https://chat.whatsapp.com/HiWnnU9bLOwJQwbIWMs6zj" target="_blank" rel="noopener">Grupo no WhatsApp</a>
+      <a class="btn btn-k" href="https://chk.eduzz.com/89AXY5GE0D?utm_source=site&amp;utm_medium=termometro&amp;utm_campaign=cta-final" target="_blank" rel="noopener">Criar acesso grátis</a>
+      <a class="btn btn-line" href="../materiais/">Ver os e-books</a>
     </div>
   </div>
 </section>
@@ -492,22 +400,38 @@ th{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em
 
 <footer class="foot">
   <div class="wrap">
-    <span class="foot-marca"><img src="../marca/logo-branco.svg" alt="ConstruExpert" width="107" height="30" loading="lazy"><span>© 2026 ConstruExpert. Especialização prática para profissionais da construção.</span></span>
-    <span>Dados públicos, atualizados uma vez por dia.</span>
+    <div class="foot-grid">
+      <div class="foot-marca">
+        <img src="../marca/logo-branco.svg" alt="ConstruExpert" width="114" height="32" loading="lazy">
+        <p>Dados e formação prática para quem constrói, vende e especifica. Conectada à rede da Construsul e da Construsul BC.</p>
+      </div>
+      <div>
+        <h3>Conteúdo</h3>
+        <ul>
+          <li><a href="../termometro/">Termômetro</a></li>
+          <li><a href="../relatorio/">Relatório de Mercado</a></li>
+          <li><a href="../materiais/">Materiais grátis</a></li>
+          <li><a href="../metodologia/">Metodologia</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Fale com a gente</h3>
+        <ul>
+          <li><a href="../para-marcas/">Para marcas e patrocínio</a></li>
+          <li><a href="https://wa.me/5551999713119?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20ConstruExpert%20e%20quero%20conhecer%20as%20trilhas%20patrocinadas." target="_blank" rel="noopener">WhatsApp comercial</a></li>
+          <li><a href="https://chat.whatsapp.com/HiWnnU9bLOwJQwbIWMs6zj" target="_blank" rel="noopener">Grupo no WhatsApp</a></li>
+          <li><a href="https://construexpert.substack.com/subscribe?utm_source=site&amp;utm_medium=rodape" target="_blank" rel="noopener">Newsletter no Substack</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 ConstruExpert.</span>
+      <span>Leitura analítica do setor com dados públicos. Não é recomendação de investimento.</span>
+    </div>
   </div>
 </footer>
+<script src="../assets/site.js" defer></script>
 
-<script>
-// Enquanto um PDF ainda não estiver no site, o botão leva ao grupo do WhatsApp, onde os e-books são enviados.
-(function(){
-  var grupo='https://chat.whatsapp.com/HiWnnU9bLOwJQwbIWMs6zj';
-  document.querySelectorAll('a[data-ebook]').forEach(function(a){
-    fetch(a.getAttribute('href'),{method:'HEAD'}).then(function(r){
-      if(!r.ok){a.href=grupo;a.textContent='Receber grátis no WhatsApp';}
-    }).catch(function(){});
-  });
-})();
-</script>
 <script type="application/json" id="dados-embutidos"></script>
 <script>
 (function(){
@@ -537,21 +461,21 @@ function iniciar(D){
     var a=H[H.length-1], b=H[H.length-2], dlt=a[1]-b[1];
     document.getElementById("variacao").textContent=(dlt>=0?"+":"")+fN(dlt,1)+" ponto"+(Math.abs(dlt)>=2||Math.abs(dlt)<1?"s":"")+" contra "+fMes(b[0])+". Leituras até "+fMes(D.mes_ref)+".";
   }
-  document.getElementById("atualizado").textContent="Página atualizada em "+new Date(D.gerado_em).toLocaleDateString("pt-BR")+".";
+  document.getElementById("atualizado").textContent="Dados atualizados em "+new Date(D.gerado_em).toLocaleDateString("pt-BR")+".";
 
   /* Pilares no topo */
   var semDado=D.pilares.filter(function(p){return p.pontos==null;});
   document.getElementById("pil-lista").innerHTML='<p class="rotulo">Os pilares (0 a 100)</p>'+D.pilares.map(function(p){
     if(p.pontos==null) return '<div class="pil-l vazio"><span class="nm">'+p.nome+'<small>peso '+p.peso+'%</small></span><div class="bar"></div><span class="pt">sem dado</span></div>';
     return '<div class="pil-l"><span class="nm">'+p.nome+'<small>peso '+p.peso+'%</small></span><div class="bar"><span style="width:'+p.pontos+'%;background:'+FAIXAS[faixaDe(p.pontos)].hex+'"></span></div><span class="pt num">'+Math.round(p.pontos)+'</span></div>';
-  }).join("")+(semDado.length?'<p class="aviso-pilar">'+semDado.map(function(p){return p.nome;}).join(" e ")+' ainda sem dado: peso redistribuído entre os demais.</p>':'');
+  }).join("")+'<p class="pil-nota">0 = pior leitura dos últimos 5 anos · 100 = melhor</p>'+(semDado.length?'<p class="aviso-pilar">'+semDado.map(function(p){return p.nome;}).join(" e ")+' ainda sem dado: peso redistribuído entre os demais.</p>':'');
 
   /* Cartões por pilar */
   document.getElementById("pcards").innerHTML=D.pilares.map(function(p){
     var its=D.indicadores.filter(function(i){return i.pilar===p.id;});
     var cor=p.pontos==null?"#444":FAIXAS[faixaDe(p.pontos)].hex;
     return '<article class="pcard" style="border-top:4px solid '+cor+'"><div class="pcard-top"><div><h3>'+p.nome+'</h3><span class="peso">peso '+p.peso+'%</span></div>'+
-      '<div class="pp num">'+(p.pontos==null?'<small>sem dado</small>':Math.round(p.pontos)+'<small>/100</small>')+'</div></div><p>'+p.explica+'</p>'+
+      '<div class="pp num">'+(p.pontos==null?'<small>sem dado</small>':Math.round(p.pontos)+'<small>/100</small>')+'</div></div><p>'+p.explica+'</p>'+(p.pontos!=null&&p.pontos<10?'<p class="aviso-pilar">Perto do pior nível dos últimos cinco anos.</p>':(p.pontos!=null&&p.pontos>90?'<p class="aviso-pilar">Perto do melhor nível dos últimos cinco anos.</p>':''))+
       its.map(function(i){
         if(!i.tem) return '<div class="ind fora"><div class="ind-top"><b>'+i.nome+'</b><span class="v">fora do cálculo</span></div><span class="meta">'+i.fonte+' · ainda sem série lançada</span></div>';
         var pos=i.max===i.min?50:(i.valor-i.min)/(i.max-i.min)*100;
@@ -561,12 +485,6 @@ function iniciar(D){
           '<div class="jan-rot"><span>'+fVal(i,i.min)+' ('+esq+')</span><span>'+fVal(i,i.max)+' ('+dir+')</span></div>'+
           '<span class="meta">'+fMes(i.mes)+' · pontuação '+Math.round(i.s)+' · '+i.fonte+'</span></div>';
       }).join("")+'</article>';
-  }).join("");
-
-  /* Tabela da metodologia */
-  document.getElementById("t-pilares").innerHTML=D.pilares.map(function(p){
-    var its=D.indicadores.filter(function(i){return i.pilar===p.id;}).map(function(i){return i.nome+(i.menor_melhor?" (menor é melhor)":"");}).join("; ");
-    return '<tr><td><b>'+p.nome+'</b></td><td style="text-align:left;white-space:normal">'+its+'</td><td>'+p.peso+'%</td></tr>';
   }).join("");
 
   /* Custo por estado */
